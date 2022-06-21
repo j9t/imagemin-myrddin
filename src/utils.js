@@ -21,7 +21,7 @@ const crushing = async (filename, dry) => {
 
   let output = parsePath(filename).dir || './'
   if(dry){
-    output = `/tmp/imagemin-merlin/${parsePath(filename).absolute}`
+    output = `/tmp/imagemin-nilrem/${parsePath(filename).absolute}`
   }
 
   await imagemin([filename], output, {

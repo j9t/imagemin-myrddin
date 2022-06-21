@@ -12,7 +12,7 @@ let savedKB = 0
 
 module.exports = async argv => {
   if(argv.dry){
-    rimraf.sync('/tmp/imagemin-merlin')
+    rimraf.sync('/tmp/imagemin-nilrem')
   }
 
   let ignorePaths = []

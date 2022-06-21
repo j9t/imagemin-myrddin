@@ -1,13 +1,13 @@
 {
   "name": "imagemin-nilrem",
-  "version": "2.1.0",
-  "description": "Crush GIF, JPG, and PNG images lossless-ly (manually or automatically)",
+  "version": "3.0.0",
+  "description": "Easy lossless compression for GIF, JPG, and PNG images",
   "bin": {
-    "imagemin-merlin": "./bin/imagemin-merlin.js"
+    "imagemin-nilrem": "./bin/imagemin-nilrem.js"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:j9t/imagemin-nilrem.git",
+    "url": "git@github.com:j9t/imagemin-nilrem.git"
   },
   "homepage": "https://github.com/j9t/imagemin-nilrem",
   "keywords": [
@@ -24,7 +24,7 @@
     "performance",
     "automation"
   ],
-  "author": "sum.cumo",
+  "author": "Jens Oliver Meiert",
   "license": "Apache-2.0",
   "dependencies": {
     "chalk": "^5.0.1",
