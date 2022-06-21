@@ -1,15 +1,15 @@
 {
-  "name": "@sum.cumo/imagemin-merlin",
-  "version": "2.0.0",
+  "name": "imagemin-nilrem",
+  "version": "2.1.0",
   "description": "Crush GIF, JPG, and PNG images lossless-ly (manually or automatically)",
   "bin": {
     "imagemin-merlin": "./bin/imagemin-merlin.js"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:sumcumo/imagemin-merlin.git"
+    "url": "git@github.com:j9t/imagemin-nilrem.git",
   },
-  "homepage": "https://github.com/sumcumo/imagemin-merlin",
+  "homepage": "https://github.com/j9t/imagemin-nilrem",
   "keywords": [
     "minify",
     "compress",
