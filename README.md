@@ -68,7 +68,7 @@ The `--staged` parameter triggers a mode that watches GIF, JPG and PNG files in 
 
 Merlin is a Node script that puts a little [wrapper](bin/imagemin-merlin.js) around [imagemin-cli](https://www.npmjs.com/package/imagemin-cli) and the three losslessly compressing sub-packages [imagemin-gifsicle](https://www.npmjs.com/package/imagemin-gifsicle), [imagemin-optipng](https://www.npmjs.com/package/imagemin-optipng) and [imagemin-jpegtran](https://www.npmjs.com/package/imagemin-jpegtran).
 
-Unless manual optimization over the project or subfolders is triggered, automated compression works through Git hooks that monitor whether a given change list includes image files. If it does, only those images are compressed where there is an improvement, so to prevent regressions and to be able to actually feed back the improved images to the underlying repository.
+Unless manual optimization over the project or subfolders is triggered, automated compression works through Git hooks that monitor whether a given change list includes image files. If it does, only those images are compressed where there is an improvement, so as to prevent regressions and to be able to actually feed back the improved images to the underlying repository.
 
 Through this approach, though still glossed over here, Merlin makes up for what’s missing or complicated in imagemin and related packages, namely easy, riskless, automated, resource-friendly “on site” optimization.
 
@@ -82,7 +82,7 @@ That last piece is useful since Merlin compresses losslessly, so that there’s 
 
 ## What does Merlin _not_ do?
 
-Merlin is no substitute for image fine-tuning and micro-optimization. That is really difficult to do in an automated fashion, because that type of compression requires weighing quality and performance, which is [context-dependent](https://meiert.com/en/blog/understanding-image-compression/). In its most extreme form, when maximum quality at maximum performance is required from each graphic, micro-optimization is even hard to do manually.
+Merlin is no substitute for image fine-tuning and micro-optimization. That is difficult to do in an automated fashion, because that type of compression requires weighing quality and performance, which is [context-dependent](https://meiert.com/en/blog/understanding-image-compression/). In its most extreme form, when maximum quality at maximum performance is required from each graphic, micro-optimization is even hard to do manually.
 
 The point is: Micro-optimization still needs to be taken care of through complementary means, whether manually or through other tools (well including other packages from the [imagemin family](https://github.com/imagemin)). Merlin simply solves the problem that images are checked in or go live that are not compressed _at all_.
 
