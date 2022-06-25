@@ -54,7 +54,7 @@ The `--staged` parameter triggers a mode that watches GIF, JPG and PNG files in 
 
 ## How does the output look like?
 
-![output](./docs/assets/output.png)
+![output](docs/media/output.png)
 
 * Green: The graphic has been optimized.
 * White: The graphic has not been changed.
