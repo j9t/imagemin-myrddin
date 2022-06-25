@@ -48,7 +48,7 @@ const crushing = async (filename, dry) => {
     status = 'Skipped'
     details = 'more optimized'
 
-    // restore the backup'ed file
+    // Restore the backup’ed file
     fs.renameSync(filenameBackup, filename)
   }
 
