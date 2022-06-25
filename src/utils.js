@@ -6,7 +6,7 @@ import imageminMozjpeg from 'imagemin-mozjpeg'
 import imageminOptipng from 'imagemin-optipng'
 import imageminGifsicle from 'imagemin-gifsicle'
 import chalk from 'chalk'
-import { options } from './plugin_options.js'
+import { options } from './plugins.js'
 
 const crushing = async (filename, dry) => {
 
@@ -48,7 +48,7 @@ const crushing = async (filename, dry) => {
     status = 'Skipped'
     details = 'more optimized'
 
-    // restore the backup'ed file
+    // Restore the backup’ed file
     fs.renameSync(filenameBackup, filename)
   }
 

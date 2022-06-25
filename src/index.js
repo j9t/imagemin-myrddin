@@ -5,6 +5,7 @@ import { utils } from './utils.js'
 import cwd from 'cwd'
 import _yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
+
 const yargs = _yargs(hideBin(process.argv));
 
 (async () => {
@@ -24,7 +25,7 @@ const yargs = _yargs(hideBin(process.argv));
     ignorePaths = argv.ignore.split(',')
   }
 
-  // search for staged files
+  // Search for staged files
   if(argv.staged){
     sgf('A', async function(err, results){
       if(err){
@@ -77,7 +78,7 @@ const yargs = _yargs(hideBin(process.argv));
   }
 })();
 
-// files to be crushed
+// Files to be crushed
 const regex = new RegExp(/\.gif|\.jpeg|\.jpg|\.png$/)
 console.log(`(Search pattern: ${regex})\n`)
 
