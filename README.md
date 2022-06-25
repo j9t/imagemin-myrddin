@@ -1,4 +1,8 @@
-# imagemin-merlin (aka Merlin)
+# imagemin-guard
+
+⚠️️ This project is based on [sum.cumo’s imagemin-merlin](https://github.com/sumcumo/imagemin-merlin) and in the process of being refurbished and made available under a new name, imagemin-guard.
+
+----
 
 Merlin is an extension of [imagemin](https://www.npmjs.com/package/imagemin) that makes it _super-easy_ to automatically, efficiently compress GIF, JPG and PNG graphics.
 

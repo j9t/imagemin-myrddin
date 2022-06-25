@@ -1,15 +1,15 @@
 {
-  "name": "@sum.cumo/imagemin-merlin",
-  "description": "Crush GIF, JPG, and PNG images lossless-ly (manually or automatically)",
-  "author": "sum.cumo",
+  "name": "imagemin-guard",
+  "description": "Ensure losslessly compressed JPG, PNG, and GIF images (suitable for manual and automatic compression)",
+  "author": "Jens Oliver Meiert",
   "version": "3.0.0",
   "type": "module",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "git@github.com:sumcumo/imagemin-merlin.git"
+    "url": "git@github.com:j9t/imagemin-guard.git"
   },
-  "homepage": "https://github.com/sumcumo/imagemin-merlin",
+  "homepage": "https://github.com/j9t/imagemin-guard",
   "keywords": [
     "minify",
     "compress",
@@ -37,6 +37,7 @@
     "yargs": "^17.5.1"
   },
   "bin": {
-    "imagemin-merlin": "./bin/imagemin-merlin.js"
+    "imagemin-merlin": "./bin/imagemin-merlin.js",
+    "imagemin-guard": "./bin/imagemin-merlin.js"
   }
 }
