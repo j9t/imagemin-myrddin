@@ -2,7 +2,7 @@
   "name": "imagemin-guard",
   "description": "Ensure losslessly compressed JPG, PNG, GIF, WebP, and AVIF images (suitable for manual and automatic compression)",
   "author": "Jens Oliver Meiert",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "type": "module",
   "license": "Apache-2.0",
   "repository": {
@@ -41,7 +41,7 @@
     "yargs": "^17.5.1"
   },
   "bin": {
-    "imagemin-merlin": "./bin/imagemin-merlin.js",
-    "imagemin-guard": "./bin/imagemin-merlin.js"
+    "imagemin-guard": "./bin/imagemin-guard.js",
+    "imagemin-merlin": "./bin/imagemin-guard.js"
   }
 }
