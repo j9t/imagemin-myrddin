@@ -1,3 +1,5 @@
+// This file, which had been forked from imagemin-merlin, was modified for imagemin-guard: https://github.com/sumcumo/imagemin-merlin/compare/master...j9t:master
+
 import filesize from 'filesize'
 import fs from 'fs'
 import parsePath from 'parse-filepath'

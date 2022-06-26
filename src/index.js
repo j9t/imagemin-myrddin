@@ -1,3 +1,5 @@
+// This file, which had been forked from imagemin-merlin, was modified for imagemin-guard: https://github.com/sumcumo/imagemin-merlin/compare/master...j9t:master
+
 import rimraf from 'rimraf'
 import find from 'find'
 import sgf from 'staged-git-files'
