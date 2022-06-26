@@ -5,6 +5,8 @@ import imagemin from 'imagemin'
 import imageminMozjpeg from 'imagemin-mozjpeg'
 import imageminOptipng from 'imagemin-optipng'
 import imageminGifsicle from 'imagemin-gifsicle'
+import imageminAvif from 'imagemin-avif'
+import imageminWebp from 'imagemin-webp'
 import chalk from 'chalk'
 import { options } from './plugins.js'
 
@@ -31,6 +33,8 @@ const crushing = async (filename, dry) => {
       imageminMozjpeg(options.mozjpeg),
       imageminOptipng(options.optipng),
       imageminGifsicle(options.gifsicle),
+      imageminAvif(options.avif),
+      imageminWebp(options.webp),
     ]
   })
   const fileSizeAfter = size(`${output}/${parsePath(filename).base}`)
