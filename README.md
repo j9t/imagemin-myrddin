@@ -68,15 +68,15 @@ Imagemin Guard is a Node script that puts a little [wrapper](bin/imagemin-guard.
 
 Unless manual optimization over the project or subfolders is triggered, automated compression works through Git hooks that monitor whether a given change list includes image files. If it does, only those images are compressed where there is an improvement, so as to prevent regressions and to be able to actually feed back the improved images to the underlying repository.
 
-Through this approach, though still glossed over here, Imagemin Guard makes up for what’s missing or complicated in imagemin and related packages, namely easy, riskless, automated, resource-friendly “on site” optimization.
+Through this approach, though still glossed over here, Imagemin Guard makes up for what’s missing or complicated in imagemin and related packages, namely easy, riskless, automated, resource-friendly “on-site” optimization.
 
 ### Why Use Imagemin Guard?
 
 (This is just a paraphrased remainder of earlier documentation, left in case it makes anything more clear ☺️)
 
-You _can_ use Imagemin Guard if you need a simple, automatable, robust solution to compress images and to keep the compressed result in your repository (instead of only in the production environment).
+You _can_ use Imagemin Guard if you need a simple, automatable, robust solution to compress images and to keep the compressed results in your repository (instead of only in the production environment).
 
-That last piece is useful since Imagemin Guard compresses losslessly, so that there’s no risk that images suffer from quality issues after processing. This kind of defensive base compression makes it obvious to also want to feed back compressed graphics into one’s source repository—which is why Imagemin Guard works the way it does
+That last piece is useful since Imagemin Guard compresses losslessly, so there’s no risk that images suffer from quality issues after processing. This kind of defensive base compression makes it obvious to also want to feed back compressed graphics into one’s source repository—which is why Imagemin Guard works the way it does.
 
 ## What Does Imagemin Guard _Not_ Do?
 
@@ -86,9 +86,9 @@ The point is: Micro-optimization still needs to be taken care of through other m
 
 ## What’s Next?
 
-Similar to [Merlin](https://github.com/sumcumo/imagemin-merlin), which Imagemin Guard is based on, new features may include:
+Following [Merlin](https://github.com/sumcumo/imagemin-merlin), which Imagemin Guard is based on, new features may include:
 
-* the option to configure the underlying imagemin plugins (somewhat prepared for but not completed yet);
+* the option to configure the underlying imagemin plugins (somewhat prepared but not completed yet);
 * observing .gitignore files when Imagemin Guard doesn’t run as `--staged`;
 * supporting projects in which the project’s .git folder is not at the same level as its package.json—at the moment, automatic mode doesn’t work in these cases.
 
