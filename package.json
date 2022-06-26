@@ -1,6 +1,6 @@
 {
   "name": "imagemin-guard",
-  "description": "Ensure losslessly compressed JPG, PNG, and GIF images (suitable for manual and automatic compression)",
+  "description": "Ensure losslessly compressed JPG, PNG, GIF, WebP, and AVIF images (suitable for manual and automatic compression)",
   "author": "Jens Oliver Meiert",
   "version": "3.0.0",
   "type": "module",
@@ -11,18 +11,20 @@
   },
   "homepage": "https://github.com/j9t/imagemin-guard",
   "keywords": [
-    "minify",
     "compress",
     "compression",
     "image",
     "images",
     "graphics",
-    "gif",
+    "performance",
+    "automation",
+    "lossless",
     "jpeg",
     "jpg",
     "png",
-    "performance",
-    "automation"
+    "gif",
+    "webp",
+    "avif"
   ],
   "dependencies": {
     "chalk": "^5.0.1",
