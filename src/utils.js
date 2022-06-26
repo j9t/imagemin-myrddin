@@ -45,7 +45,7 @@ const crushing = async (filename, dry) => {
 
   if(fileSizeAfter < fileSizeBefore){
     color = 'green'
-    status = 'Crushed'
+    status = 'Compressed'
     details = `${sizeHuman(fileSizeBefore)} → ${sizeHuman(fileSizeAfter)}`
   } else if(fileSizeAfter > fileSizeBefore){ // filesize is bigger than before
     color = 'blue'
