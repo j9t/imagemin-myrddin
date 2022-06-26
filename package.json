@@ -1,8 +1,8 @@
 {
-  "name": "imagemin-guard",
+  "name": "@j9t/imagemin-guard",
   "description": "Ensure losslessly compressed JPG, PNG, GIF, WebP, and AVIF images (suitable for manual and automatic compression)",
   "author": "Jens Oliver Meiert",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "type": "module",
   "license": "Apache-2.0",
   "repository": {
