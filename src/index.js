@@ -79,7 +79,7 @@ const yargs = _yargs(hideBin(process.argv));
 })();
 
 // Files to be crushed
-const regex = new RegExp(/\.gif|\.jpeg|\.jpg|\.png$/)
+const regex = new RegExp(/\.avif|\.gif|\.jpeg|\.jpg|\.png|\.webp$/)
 console.log(`(Search pattern: ${regex})\n`)
 
 let savedKB = 0

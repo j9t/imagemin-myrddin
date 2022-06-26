@@ -1,10 +1,10 @@
 # imagemin-guard
 
-⚠️️ This project is based on [sum.cumo’s imagemin-merlin](https://github.com/sumcumo/imagemin-merlin) and in the process of being refurbished and made available under a new name, imagemin-guard.
+⚠️️ This project is based on [sum.cumo’s imagemin-merlin](https://github.com/sumcumo/imagemin-merlin) and in the process of being updated (up-to-date dependencies, improved code quality), extended (additional image formats), and made available under a new name (imagemin-guard).
 
 ----
 
-Merlin is an extension of [imagemin](https://www.npmjs.com/package/imagemin) that makes it _super-easy_ to automatically, efficiently compress GIF, JPG and PNG graphics.
+Merlin is an extension of [imagemin](https://www.npmjs.com/package/imagemin) that makes it _super-easy_ to automatically, efficiently compress GIF, JPG and PNG [and WebP and AVIF] graphics.
 
 It’s “super-easy” for two reasons:
 
@@ -105,7 +105,3 @@ Licensed under the Apache License, Version 2.0 (the “License”); you may not 
     http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
-
-----
-
-[Learn more about sum.cumo](https://www.sumcumo.com/en) and [work on open source projects](https://www.sumcumo.com/jobs), too!
