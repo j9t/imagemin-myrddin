@@ -33,8 +33,8 @@ const crushing = async (filename, dry) => {
       imageminMozjpeg(options.mozjpeg),
       imageminOptipng(options.optipng),
       imageminGifsicle(options.gifsicle),
-      imageminAvif(options.avif),
       imageminWebp(options.webp),
+      imageminAvif(options.avif),
     ]
   })
   const fileSizeAfter = size(`${output}/${parsePath(filename).base}`)
