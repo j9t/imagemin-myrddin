@@ -17,7 +17,7 @@ It’s super-easy for two reasons:
 Install Imagemin Guard in your project:
 
 ```bash
-@@ npm i -D imagemin-guard
+npm i -D @j9t/imagemin-guard
 ```
 
 ### 2a) Perform Manual Optimization
