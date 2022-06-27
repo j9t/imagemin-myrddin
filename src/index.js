@@ -5,8 +5,8 @@ import find from 'find'
 import sgf from 'staged-git-files'
 import { utils } from './utils.js'
 import cwd from 'cwd'
-import _yargs from 'yargs';
-import { hideBin } from 'yargs/helpers';
+import _yargs from 'yargs'
+import { hideBin } from 'yargs/helpers'
 
 const yargs = _yargs(hideBin(process.argv));
 
@@ -18,7 +18,7 @@ const yargs = _yargs(hideBin(process.argv));
   // console.log(argv)
 
   if(argv.dry){
-    rimraf.sync('/tmp/imagemin-guard');
+    rimraf.sync('/tmp/imagemin-guard')
   }
 
   let ignorePaths = []
@@ -45,7 +45,7 @@ const yargs = _yargs(hideBin(process.argv));
       })
 
       for (let index = 0; index < filteredResults.length; index++) {
-        const result = filteredResults[index];
+        const result = filteredResults[index]
         didRun = true
         savedKB += await utils.crushing(result.filename, argv.dry)
       }
@@ -78,7 +78,7 @@ const yargs = _yargs(hideBin(process.argv));
 
     closingNote(didRun)
   }
-})();
+})()
 
 // Files to be crushed
 const regex = new RegExp(/\.avif|\.gif|\.jpeg|\.jpg|\.png|\.webp$/)
