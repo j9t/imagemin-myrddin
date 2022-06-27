@@ -56,7 +56,7 @@ The `--staged` parameter triggers a mode that watches JPG, PNG, GIF, WebP, and A
 
 ## How Does the Output Look Like?
 
-![Screenshot of Imagemin Guard’s predecessor, Merlin, in operation.](docs/media/output.png)
+![Screenshot of Imagemin Guard’s predecessor, Merlin, in operation.](https://raw.githubusercontent.com/j9t/imagemin-guard/master/docs/media/output.png)
 
 * Green: The image file has been optimized.
 * White: The image file has not been changed.
@@ -64,7 +64,7 @@ The `--staged` parameter triggers a mode that watches JPG, PNG, GIF, WebP, and A
 
 ## How Does Imagemin Guard Work?
 
-Imagemin Guard is a Node script that puts a little [wrapper](bin/imagemin-guard.js) around [imagemin-cli](https://www.npmjs.com/package/imagemin-cli) and the packages [imagemin-mozjpeg](https://www.npmjs.com/package/imagemin-mozjpeg), [imagemin-optipng](https://www.npmjs.com/package/imagemin-optipng), [imagemin-gifsicle](https://www.npmjs.com/package/imagemin-gifsicle), [imagemin-webp](https://www.npmjs.com/package/imagemin-webp), and [imagemin-avif](https://www.npmjs.com/package/imagemin-avif).
+Imagemin Guard is a Node script that puts a little wrapper around [imagemin-cli](https://www.npmjs.com/package/imagemin-cli) and the packages [imagemin-mozjpeg](https://www.npmjs.com/package/imagemin-mozjpeg), [imagemin-optipng](https://www.npmjs.com/package/imagemin-optipng), [imagemin-gifsicle](https://www.npmjs.com/package/imagemin-gifsicle), [imagemin-webp](https://www.npmjs.com/package/imagemin-webp), and [imagemin-avif](https://www.npmjs.com/package/imagemin-avif).
 
 Unless manual optimization over the project or subfolders is triggered, automated compression works through Git hooks that monitor whether a given change list includes image files. If it does, only those images are compressed where there is an improvement, so as to prevent regressions and to be able to actually feed back the improved images to the underlying repository.
 
