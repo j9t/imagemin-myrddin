@@ -1,5 +1,3 @@
-.eslintcache
-.eslintrc
-.eslintignore
 .gitignore
 node_modules/
+test/
