@@ -42,14 +42,14 @@ There’s a `--folder` option that allows to set a particular folder for compres
 
 ### 2b) Set Up Automatic Optimization
 
-For automated use Imagemin Guard should be triggered through a [Git hook](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks) or a related tool like [Husky](https://github.com/typicode/husky) (`npm i -D husky`), for example on `pre-commit`. For that, using Husky as an example, the following may be added to package.json (main level):
+For automated use Imagemin Guard should be triggered through a [Git hook](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks) or a related tool like [Husky](https://github.com/typicode/husky) (`npm i -D husky`), for example on `pre-commit`. For that, using Husky as an example, run the following commands (you can copy and execute them at once):
 
-```json
-"husky": {
-  "hooks": {
-    "pre-commit": "npm run imagemin -- --staged"
-  }
-},
+```console
+npm set-script prepare "husky install";\
+npm run prepare;\
+npx husky add .husky/pre-commit "npm run imagemin -- --staged";\
+git add .husky/pre-commit;\
+git commit -m "feat: add Husky pre-commit hook"
 ```
 
 The `--staged` parameter triggers a mode that watches JPG, PNG, GIF, WebP, and AVIF files in `git diff` and only compresses those files—that approach makes Imagemin Guard be quite efficient in operation. (The `folder` parameter doesn’t work in `staged` mode.)
