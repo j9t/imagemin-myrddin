@@ -29,14 +29,14 @@ const crushing = async (filename, dry) => {
     output = `/tmp/imagemin-guard/${parsePath(filename).absolute}`
   }
 
-  // @@
+  // @@ Ensure WebP and AVIF support
   await imagemin([filename], {
     destination: output,
     plugins: [
       imageminMozjpeg(options.mozjpeg),
-      /* imageminOptipng(options.optipng),
+      imageminOptipng(options.optipng),
       imageminGifsicle(options.gifsicle),
-      imageminWebp(options.webp),
+      /* imageminWebp(options.webp),
       imageminAvif(options.avif), */
     ]
   })
