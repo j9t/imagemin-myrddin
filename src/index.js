@@ -80,7 +80,7 @@ const yargs = _yargs(hideBin(process.argv));
   }
 })()
 
-// Files to be crushed
+// Files to be optimized
 const regex = new RegExp(/\.avif|\.gif|\.jpeg|\.jpg|\.png|\.webp$/)
 console.log(`(Search pattern: ${regex})\n`)
 
@@ -88,8 +88,8 @@ let savedKB = 0
 
 const closingNote = (didRun) => {
   if(didRun){
-    console.info(`\n🎉 You saved ${utils.sizeHuman(savedKB)}.`)
+    console.info(`\nImages optimized. You saved ${utils.sizeHuman(savedKB)}.`)
   } else {
-    console.info('\nThere were no images found to crush ¯\\_(ツ)_/¯ See you next time.')
+    console.info('\nThere were no images to optimize.')
   }
 }

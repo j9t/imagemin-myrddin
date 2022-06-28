@@ -1,6 +1,6 @@
 # Imagemin Guard
 
-(This project is based on [sum.cumo’s imagemin-merlin](https://github.com/sumcumo/imagemin-merlin). All [changes are documented](https://github.com/sumcumo/imagemin-merlin/compare/master...j9t:master), and include this README. Imagemin Guard supports two additional file formats—WebP and AVIF—, is based on up-to-date dependencies and maintained, and comes with improved code and documentation. The project is still in the process of being released—expect further updates.)
+(This project is based on [sum.cumo’s imagemin-merlin](https://github.com/sumcumo/imagemin-merlin). All [changes are documented](https://github.com/sumcumo/imagemin-merlin/compare/master...j9t:master), and include this README. Imagemin Guard is to support two additional file formats—WebP and AVIF, currently being set up though mentioned in the documentation—, is based on up-to-date dependencies and maintained, and comes with improved code and documentation. The project is still in the process of being released—expect further updates.)
 
 Imagemin Guard takes care of lossless compression of your images, to help you avoid bloat in your repositories. It’s an extension of [imagemin](https://www.npmjs.com/package/imagemin) and a fork of [imagemin-merlin](https://github.com/sumcumo/imagemin-merlin) that makes it super-easy to automatically, efficiently compress JPG, PNG, GIF, WebP, and AVIF images.
 
@@ -38,7 +38,7 @@ There’s a `--folder` option that allows to set a particular folder for compres
 
 `--dry` allows to run Imagemin Guard in “dry mode.” All changed files can then be inspected under `/tmp/imagemin-guard`.
 
-`--ignore` lets Imagemin Guard ignore the specified paths. Multiple paths have to be seperated by comma.
+`--ignore` has Imagemin Guard ignore the specified paths. Multiple paths have to be separated by comma.
 
 ### 2b) Set Up Automatic Optimization
 
