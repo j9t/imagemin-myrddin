@@ -86,11 +86,7 @@ The point is: Micro-optimization still needs to be taken care of through other m
 
 ## What’s Next?
 
-Following [Merlin](https://github.com/sumcumo/imagemin-merlin), which Imagemin Guard is based on, new features may include:
-
-* the option to configure the underlying imagemin plugins (somewhat prepared but not completed yet);
-* observing .gitignore files when Imagemin Guard doesn’t run as `--staged`;
-* supporting projects in which the project’s .git folder is not at the same level as its package.json—at the moment, automatic mode doesn’t work in these cases.
+Following [Merlin](https://github.com/sumcumo/imagemin-merlin), which Imagemin Guard is based on, new features may include the option to configure the underlying imagemin plugins (somewhat prepared but not completed yet), or supporting projects in which the project’s .git folder is not at the same level as its package.json (at the moment, automatic mode doesn’t work in these cases).
 
 Thoughts, suggestions, fixes? Please file an [issue](https://github.com/j9t/imagemin-guard/issues/new) or send a pull request—thank you!
 
