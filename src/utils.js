@@ -42,6 +42,54 @@ const crushing = async (filename, dry) => {
   })
   const fileSizeAfter = size(`${output}/${parsePath(filename).base}`)
 
+  /* if (filename.endsWith('.jpg' || '.jpeg')) {
+    await imagemin([filename], {
+      destination: output,
+      plugins: [
+        imageminMozjpeg(options.mozjpeg)
+      ]
+    })
+    const fileSizeAfter = size(`${output}/${parsePath(filename).base}`)
+  }
+
+  if (filename.endsWith('.png')) {
+    await imagemin([filename], output, {
+      use: [
+        imageminOptipng(options.optipng)
+      ]
+    })
+    const fileSizeAfter = size(`${output}/${parsePath(filename).base}`)
+  }
+
+  if (filename.endsWith('.gif')) {
+    await imagemin([filename], output, {
+      use: [
+        imageminGifsicle(options.gifsicle)
+      ]
+    })
+    const fileSizeAfter = size(`${output}/${parsePath(filename).base}`)
+  }
+
+  if (filename.endsWith('.webp')) {
+    await imagemin([filename], {
+      destination: output,
+      plugins: [
+        imageminWebp(options.webp)
+      ]
+    })
+    const fileSizeAfter = size(`${output}/${parsePath(filename).base}`)
+  }
+
+  if (filename.endsWith('.avif')) {
+    await imagemin([filename], {
+      destination: output,
+      plugins: [
+        imageminAvif(options.avif)
+      ]
+    })
+    const fileSizeAfter = size(`${output}/${parsePath(filename).base}`)
+  } */
+
   let color = 'white'
   let status = 'Skipped'
   let details = 'already optimized'
