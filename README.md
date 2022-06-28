@@ -38,7 +38,7 @@ There’s a `--folder` option that allows to set a particular folder for compres
 
 `--dry` allows to run Imagemin Guard in “dry mode.” All changed files can then be inspected under `/tmp/imagemin-guard`.
 
-`--ignore` lets Imagemin Guard ignore the specified paths. Multiple paths have to be seperated by comma.
+`--ignore` has Imagemin Guard ignore the specified paths. Multiple paths have to be separated by comma.
 
 ### 2b) Set Up Automatic Optimization
 
