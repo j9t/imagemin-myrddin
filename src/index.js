@@ -1,16 +1,14 @@
 // This file, which had been forked from imagemin-merlin, was modified for imagemin-guard: https://github.com/sumcumo/imagemin-merlin/compare/master...j9t:master
 
 import rimraf from 'rimraf'
-import find from 'find'
+import { globbySync } from 'globby';
 import sgf from 'staged-git-files'
 import { utils } from './utils.js'
-import cwd from 'cwd'
 import _yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
 
-const yargs = _yargs(hideBin(process.argv));
-
 (async () => {
+  const yargs = _yargs(hideBin(process.argv));
   const argv = await yargs
     .argv
 
@@ -21,11 +19,47 @@ const yargs = _yargs(hideBin(process.argv));
     rimraf.sync('/tmp/imagemin-guard')
   }
 
-  let ignorePaths = []
+  // Files to be optimized
+  // const fileTypes = ['avif', 'gif', 'jpg', 'jpeg', 'png', 'webp']
+  const fileTypes = ['gif', 'jpg', 'jpeg', 'png']
+  console.log(`(Search pattern: ${fileTypes.join(', ')})\n`)
 
-  if(argv.ignore){
-    ignorePaths = argv.ignore.split(',')
+  let savedKB = 0
+
+  const compress = async (files, dry) => {
+    for (let index = 0; index < files.length; index++) {
+      const file = files[index]
+      savedKB += await utils.compression(file, dry)
+    }
+
+    const didRun = files.length > 0
+    closingNote(didRun)
   }
+
+  const getFilePattern = (ignore) => {
+    const patterns = []
+
+    fileTypes.forEach((fileType) => {
+      patterns.push(`**/*.${fileType}`)
+    })
+
+    if(ignore){
+      const ignorePaths = ignore.split(',')
+      ignorePaths.forEach((path) => {
+        patterns.push(`!${path}`)
+      })
+    }
+
+    return patterns
+  }
+
+  const findFiles = (patterns, options = {}) => {
+    return globbySync(patterns, { gitignore: true, ...options })
+  }
+
+  const patterns = getFilePattern(argv.ignore)
+  let files = findFiles(patterns)
+  let compressFiles = files
 
   // Search for staged files
   if(argv.staged){
@@ -34,62 +68,23 @@ const yargs = _yargs(hideBin(process.argv));
         return console.error(err)
       }
 
-      let didRun = false
+      compressFiles = results
+        .map(result => result.filename)
+        .filter(filename => files.includes(filename))
 
-      let filteredResults = results
-        .filter(result => result.filename.match(regex))
-
-      ignorePaths.forEach(ignorePath => {
-        filteredResults = filteredResults
-          .filter(result => !result.filename.match(new RegExp(ignorePath)))
-      })
-
-      for (let index = 0; index < filteredResults.length; index++) {
-        const result = filteredResults[index]
-        didRun = true
-        savedKB += await utils.crushing(result.filename, argv.dry)
-      }
-
-      closingNote(didRun)
+      compress(compressFiles, argv.dry)
     })
   } else {
-    let folder = cwd()
-
-    if(argv.folder){
-      folder = argv.folder
-    }
-
-    let files = find.fileSync(regex, folder)
-    let didRun = false
-
-    ignorePaths.forEach(ignorePath => {
-      files = files
-        .filter(file => !file.match(new RegExp(ignorePath)))
-    })
-
-    for (let index = 0; index < files.length; index++) {
-      const file = files[index]
-
-      if(!file.match(/node_modules\//)){
-        didRun = true
-        savedKB += await utils.crushing(file, argv.dry)
-      }
-    }
-
-    closingNote(didRun)
+    compress(compressFiles, argv.dry)
   }
+
+  // Share status
+  const closingNote = (didRun) => {
+    if(didRun){
+      console.info(`\nImages optimized. You saved ${utils.sizeReadable(savedKB)}.`)
+    } else {
+      console.info('\nThere were no images to optimize.')
+    }
+  }
+
 })()
-
-// Files to be optimized
-const regex = new RegExp(/\.avif|\.gif|\.jpeg|\.jpg|\.png|\.webp$/)
-console.log(`(Search pattern: ${regex})\n`)
-
-let savedKB = 0
-
-const closingNote = (didRun) => {
-  if(didRun){
-    console.info(`\nImages optimized. You saved ${utils.sizeHuman(savedKB)}.`)
-  } else {
-    console.info('\nThere were no images to optimize.')
-  }
-}

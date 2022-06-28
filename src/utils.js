@@ -12,7 +12,7 @@ import imageminAvif from 'imagemin-avif'
 import chalk from 'chalk'
 import { options } from './plugins.js'
 
-const crushing = async (filename, dry) => {
+const compression = async (filename, dry) => {
 
   const filenameBackup = `${filename}.bak`
   fs.copyFileSync(filename, filenameBackup)
@@ -29,7 +29,7 @@ const crushing = async (filename, dry) => {
     output = `/tmp/imagemin-guard/${parsePath(filename).absolute}`
   }
 
-  // @@ Ensure WebP and AVIF support
+  // @@ Enable WebP and AVIF support
   await imagemin([filename], {
     destination: output,
     plugins: [
@@ -49,7 +49,7 @@ const crushing = async (filename, dry) => {
   if(fileSizeAfter < fileSizeBefore){
     color = 'green'
     status = 'Compressed'
-    details = `${sizeHuman(fileSizeBefore)} → ${sizeHuman(fileSizeAfter)}`
+    details = `${sizeReadable(fileSizeBefore)} → ${sizeReadable(fileSizeAfter)}`
   } else if(fileSizeAfter > fileSizeBefore){ // File size is bigger than before
     color = 'blue'
     status = 'Skipped'
@@ -80,8 +80,8 @@ const size = (file) => {
   return fs.statSync(file)['size']
 }
 
-const sizeHuman = (size) => {
+const sizeReadable = (size) => {
   return filesize(size, { round: 5 })
 }
 
-export const utils = { crushing, sizeHuman }
+export const utils = { compression, sizeReadable }
