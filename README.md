@@ -1,6 +1,6 @@
 # Imagemin Guard
 
-(This project is based on [sum.cumo’s imagemin-merlin](https://github.com/sumcumo/imagemin-merlin). All [changes are documented](https://github.com/sumcumo/imagemin-merlin/compare/master...j9t:master), and include this README. Imagemin Guard is to support two additional file formats—WebP and AVIF, still being set up though already mentioned in the documentation—, is based on up-to-date dependencies and maintained, and comes with improved code and documentation. The project is still in the process of being released—expect further updates.)
+(This project is based on [sum.cumo’s imagemin-merlin](https://github.com/sumcumo/imagemin-merlin). All [changes are documented](https://github.com/sumcumo/imagemin-merlin/compare/master...j9t:master), and include this README. Imagemin Guard is to support two additional file formats—WebP and AVIF, still being set up though already mentioned in the documentation—, is based on up-to-date dependencies and maintained, and comes with improved code and documentation.)
 
 Imagemin Guard takes care of lossless compression of your images, to help you avoid bloat in your repositories. It’s an extension of [imagemin](https://www.npmjs.com/package/imagemin) and a fork of [imagemin-merlin](https://github.com/sumcumo/imagemin-merlin) that makes it super-easy to automatically, efficiently compress JPG, PNG, GIF, WebP, and AVIF images.
 
@@ -49,7 +49,7 @@ npm set-script prepare "husky install";\
 npm run prepare;\
 npx husky add .husky/pre-commit "npm run imagemin -- --staged";\
 git add .husky/pre-commit;\
-git commit -m "feat: add Husky pre-commit hook"
+git commit -m "feat: add Husky pre-commit hook for Imagemin Guard"
 ```
 
 The `--staged` parameter triggers a mode that watches JPG, PNG, GIF, WebP, and AVIF files in `git diff` and only compresses those files—that approach makes Imagemin Guard be quite efficient in operation. (The `folder` parameter doesn’t work in `staged` mode.)
