@@ -2,7 +2,7 @@
 
 const mozjpeg = {
   // see https://www.npmjs.com/package/imagemin-mozjpeg
-  progressive: true,
+  progressive: true
 }
 
 const optipng = {
@@ -15,12 +15,12 @@ const gifsicle = {
 
 const webp = {
   // see https://www.npmjs.com/package/imagemin-webp
-  lossless: true,
+  lossless: true
 }
 
 const avif = {
   // see https://www.npmjs.com/package/imagemin-avif
-  lossless: true,
+  lossless: true
 }
 
 export const options = { mozjpeg, optipng, gifsicle, webp, avif }
