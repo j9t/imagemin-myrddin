@@ -2,7 +2,7 @@
 
 const mozjpeg = {
   // see https://www.npmjs.com/package/imagemin-mozjpeg
-  progressive: true
+  quality: 96
 }
 
 const optipng = {
