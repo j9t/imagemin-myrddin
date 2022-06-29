@@ -28,7 +28,7 @@
   ],
   "dependencies": {
     "chalk": "^5.0.1",
-    "filesize": "^9.0.9",
+    "filesize": "^9.0.11",
     "globby": "^13.1.2",
     "imagemin-avif": "^0.1.3",
     "imagemin-cli": "^7.0.0",
