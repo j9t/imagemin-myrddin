@@ -67,7 +67,7 @@ import { hideBin } from 'yargs/helpers'
 
   const patterns = getFilePattern(argv.ignore)
   let files = findFiles(patterns)
-  let compressFiles = files
+  let compressionFiles = files
 
   // Search for staged files
   if(argv.staged){
@@ -76,14 +76,14 @@ import { hideBin } from 'yargs/helpers'
         return console.error(err)
       }
 
-      compressFiles = results
+      compressionFiles = results
         .map(result => result.filename)
         .filter(filename => files.includes(filename))
 
-      compress(compressFiles, argv.dry)
+      compress(compressionFiles, argv.dry)
     })
   } else {
-    compress(compressFiles, argv.dry)
+    compress(compressionFiles, argv.dry)
   }
 
 })()
