@@ -29,8 +29,7 @@ import { hideBin } from 'yargs/helpers'
   }
 
   // Files to be optimized
-  // const fileTypes = ['avif', 'gif', 'jpg', 'jpeg', 'png', 'webp']
-  const fileTypes = ['gif', 'jpg', 'jpeg', 'png']
+  const fileTypes = ['avif', 'gif', 'jpg', 'jpeg', 'png', 'webp']
   console.log(`(Search pattern: ${fileTypes.join(', ')})\n`)
 
   let savedKB = 0
