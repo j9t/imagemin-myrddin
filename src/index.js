@@ -19,6 +19,15 @@ import { hideBin } from 'yargs/helpers'
     rimraf.sync('/tmp/imagemin-guard')
   }
 
+  // Share status
+  const summary = (run) => {
+    if(run){
+      console.info(`\nImages optimized. You saved ${utils.sizeReadable(savedKB)}.`)
+    } else {
+      console.info('\nThere were no images to optimize.')
+    }
+  }
+
   // Files to be optimized
   // const fileTypes = ['avif', 'gif', 'jpg', 'jpeg', 'png', 'webp']
   const fileTypes = ['gif', 'jpg', 'jpeg', 'png']
@@ -32,8 +41,8 @@ import { hideBin } from 'yargs/helpers'
       savedKB += await utils.compression(file, dry)
     }
 
-    const didRun = files.length > 0
-    closingNote(didRun)
+    const run = files.length > 0
+    summary(run)
   }
 
   const getFilePattern = (ignore) => {
@@ -76,15 +85,6 @@ import { hideBin } from 'yargs/helpers'
     })
   } else {
     compress(compressFiles, argv.dry)
-  }
-
-  // Share status
-  const closingNote = (didRun) => {
-    if(didRun){
-      console.info(`\nImages optimized. You saved ${utils.sizeReadable(savedKB)}.`)
-    } else {
-      console.info('\nThere were no images to optimize.')
-    }
   }
 
 })()

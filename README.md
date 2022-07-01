@@ -34,11 +34,9 @@ For manual use, add the following in the `scripts` section of your project’s p
 
 To ensure that _all_ JPGs, PNGs, GIFs, WebPs, and AVIFs are optimized, it’s recommended to run Imagemin Guard manually right after installation: `npm run imagemin`.
 
-There’s a `--folder` option that allows to set a particular folder for compression, different from the project root. For example, `npm run imagemin -- --folder=test`. `node_modules` is ignored by default.
-
 `--dry` allows to run Imagemin Guard in “dry mode.” All changed files can then be inspected under `/tmp/imagemin-guard`.
 
-`--ignore` has Imagemin Guard ignore the specified paths. Multiple paths have to be separated by comma.
+`--ignore` allows to specify paths to be ignored. Multiple paths have to be separated by comma. (Files and paths specified in .gitignore files are generally ignored.)
 
 ### 2b) Set Up Automatic Optimization
 
@@ -52,7 +50,7 @@ git add .husky/pre-commit;\
 git commit -m "feat: add Husky pre-commit hook for Imagemin Guard"
 ```
 
-The `--staged` parameter triggers a mode that watches JPG, PNG, GIF, WebP, and AVIF files in `git diff` and only compresses those files—that approach makes Imagemin Guard be quite efficient in operation. (The `folder` parameter doesn’t work in `staged` mode.)
+The `--staged` parameter triggers a mode that watches JPG, PNG, GIF, WebP, and AVIF files in `git diff` and only compresses those files—that approach makes Imagemin Guard be quite efficient in operation.
 
 ## How Does the Output Look Like?
 
@@ -66,7 +64,7 @@ The `--staged` parameter triggers a mode that watches JPG, PNG, GIF, WebP, and A
 
 Imagemin Guard is a Node script that puts a little wrapper around [imagemin-cli](https://www.npmjs.com/package/imagemin-cli) and the packages [imagemin-mozjpeg](https://www.npmjs.com/package/imagemin-mozjpeg), [imagemin-optipng](https://www.npmjs.com/package/imagemin-optipng), [imagemin-gifsicle](https://www.npmjs.com/package/imagemin-gifsicle), [imagemin-webp](https://www.npmjs.com/package/imagemin-webp), and [imagemin-avif](https://www.npmjs.com/package/imagemin-avif).
 
-Unless manual optimization over the project or subfolders is triggered, automated compression works through Git hooks that monitor whether a given change list includes image files. If it does, only those images are compressed where there is an improvement, so as to prevent regressions and to be able to actually feed back the improved images to the underlying repository.
+Unless manual optimization is triggered, automated compression works through Git hooks that monitor whether a given change list includes image files. If it does, only those images are compressed where there is an improvement, so as to prevent regressions and to be able to actually feed back the improved images to the underlying repository.
 
 Through this approach, though still glossed over here, Imagemin Guard makes up for what’s missing or complicated in imagemin and related packages, namely easy, riskless, automated, resource-friendly “on-site” optimization.
 
