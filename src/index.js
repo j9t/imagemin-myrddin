@@ -20,8 +20,8 @@ import { hideBin } from 'yargs/helpers'
   }
 
   // Share status
-  const closingNote = (didRun) => {
-    if(didRun){
+  const summary = (run) => {
+    if(run){
       console.info(`\nImages optimized. You saved ${utils.sizeReadable(savedKB)}.`)
     } else {
       console.info('\nThere were no images to optimize.')
@@ -41,8 +41,8 @@ import { hideBin } from 'yargs/helpers'
       savedKB += await utils.compression(file, dry)
     }
 
-    const didRun = files.length > 0
-    closingNote(didRun)
+    const run = files.length > 0
+    summary(run)
   }
 
   const getFilePattern = (ignore) => {
