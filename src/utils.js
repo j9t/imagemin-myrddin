@@ -54,7 +54,7 @@ const compression = async (filename, dry) => {
 
   let color = 'white'
   let status = 'Skipped'
-  let details = 'already optimized'
+  let details = 'already compressed'
 
   if(fileSizeAfter < fileSizeBefore){
     color = 'green'
@@ -63,7 +63,7 @@ const compression = async (filename, dry) => {
   } else if(fileSizeAfter > fileSizeBefore){ // File size is bigger than before
     color = 'blue'
     status = 'Skipped'
-    details = 'more optimized'
+    details = 'even more compressed'
 
     // Restore the backup’ed file
     fs.renameSync(filenameBackup, filename)
@@ -80,7 +80,7 @@ const compression = async (filename, dry) => {
   )
 
   if(fileSizeAfter === 0){
-    console.error(chalk.bold.red(`Something went wrong, new filesize is ${filesize(fileSizeAfter)}`))
+    console.error(chalk.bold.red(`Something went wrong, new file size is ${filesize(fileSizeAfter)}`))
   }
 
   return fileSizeAfter < fileSizeBefore ? fileSizeBefore - fileSizeAfter : 0
