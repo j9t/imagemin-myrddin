@@ -2,13 +2,11 @@
 
 (This project is based on [sum.cumo’s imagemin-merlin](https://github.com/sumcumo/imagemin-merlin). [Changes are documented](https://github.com/sumcumo/imagemin-merlin/compare/master...j9t:master), and include this README. Imagemin Guard supports two additional file formats—WebP and AVIF—, is based on up-to-date dependencies and maintained, and comes with improved code and documentation.)
 
-Imagemin Guard takes care of lossless compression of your images, to help you avoid bloat in your repositories. It’s an extension of [imagemin](https://www.npmjs.com/package/imagemin) and a fork of [imagemin-merlin](https://github.com/sumcumo/imagemin-merlin) that makes it convenient to automatically, efficiently compress JPG, PNG, GIF, WebP, and AVIF images.
+Imagemin Guard takes care of lossless compression of your images, to help you avoid bloat in your repositories. It’s an extension of [imagemin](https://www.npmjs.com/package/imagemin) and a fork of [imagemin-merlin](https://github.com/sumcumo/imagemin-merlin) that makes it convenient and safe to automatically compress JPG, PNG, GIF, WebP, and AVIF images.
 
-It’s convenient for two reasons:
+It’s convenient because setup is simple. Install, run, add hook, done.
 
-1. Setup is simple. Install, run, done.
-
-2. Compression happens _losslessly_ through standard settings. No worries about forgetting to compress images; no worries about sacrificing quality, either.
+It’s safe because compression happens _losslessly_. Therefore, no worries about forgetting to compress images, but no worries about sacrificing too much quality, either. (You can take care of additional optimizations by yourself or through other tooling.)
 
 ## Installation and Use
 
