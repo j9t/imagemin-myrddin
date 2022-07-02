@@ -1,6 +1,6 @@
 # Imagemin Guard
 
-(This project is based on [sum.cumo’s imagemin-merlin](https://github.com/sumcumo/imagemin-merlin). [Changes are documented](https://github.com/sumcumo/imagemin-merlin/compare/master...j9t:master), and include this README. Imagemin Guard supports two additional file formats—WebP and AVIF—, is based on up-to-date dependencies and maintained, and comes with improved code and documentation.)
+(This project has been based on [sum.cumo’s imagemin-merlin](https://github.com/sumcumo/imagemin-merlin). [Changes are documented](https://github.com/sumcumo/imagemin-merlin/compare/master...j9t:master), and include this README. Imagemin Guard supports two additional file formats—WebP and AVIF—, is based on up-to-date dependencies and maintained, and comes with improved code and documentation.)
 
 Imagemin Guard takes care of lossless compression of your images, to help you avoid bloat in your repositories. It’s an extension of [imagemin](https://www.npmjs.com/package/imagemin) and a fork of [imagemin-merlin](https://github.com/sumcumo/imagemin-merlin) that makes it convenient and safe to automatically compress JPG, PNG, GIF, WebP, and AVIF images.
 
@@ -14,43 +14,45 @@ It’s safe because compression happens _losslessly_. Therefore, no worries abou
 
 Install Imagemin Guard in your project:
 
-```bash
+```console
 npm i -D @j9t/imagemin-guard
 ```
 
 ### 2a) Perform Manual Compression
 
-For manual use, add the following in the `scripts` section of your project’s package.json:
+You can run Imagemin Guard by calling
 
-```json
-{
-  "scripts":{
-    "imagemin": "imagemin-guard"
-  }
-}
+```console
+npx imagemin-guard
 ```
 
-To ensure that _all_ images are being compressed, it’s recommended to run Imagemin Guard manually right after installation: `npm run imagemin`.
+To make sure that _all_ images are being compressed, it’s recommended to run Imagemin Guard like this at least once, after installation.
+
+### 2b) Set Up Automatic Compression
+
+For automated use, Imagemin Guard should be triggered through a [Git hook](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks) or a related tool like [Husky](https://github.com/typicode/husky) (`npm i -D husky`), for example on `pre-commit`.
+
+For that, using Husky as an example, run the following commands (you can copy and execute them at once):
+
+```console
+npm set-script prepare "husky install";\
+npm run prepare;\
+npx husky add .husky/pre-commit "npx imagemin-guard --staged";\
+git add .husky/pre-commit;\
+git commit -m "feat: add Husky pre-commit hook for Imagemin Guard"
+```
+
+### Parameters
 
 `--dry` allows to run Imagemin Guard in “dry mode.” All changed files can then be inspected under `/tmp/imagemin-guard`.
 
 `--ignore` allows to specify paths to be ignored (as in `--ignore=example,test`). Multiple paths have to be separated by comma. (Files and paths specified in .gitignore files are generally ignored.)
 
-### 2b) Set Up Automatic Compression
-
-For automated use, Imagemin Guard should be triggered through a [Git hook](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks) or a related tool like [Husky](https://github.com/typicode/husky) (`npm i -D husky`), for example on `pre-commit`. For that, using Husky as an example, run the following commands (you can copy and execute them at once):
-
-```console
-npm set-script prepare "husky install";\
-npm run prepare;\
-npx husky add .husky/pre-commit "npm run imagemin -- --staged";\
-git add .husky/pre-commit;\
-git commit -m "feat: add Husky pre-commit hook for Imagemin Guard"
-```
-
-The `--staged` parameter triggers a mode that watches JPG, PNG, GIF, WebP, and AVIF files in `git diff` and only compresses those files—that approach makes Imagemin Guard more efficient in operation.
+`--staged` (recommended with automated use) triggers a mode that watches JPG, PNG, GIF, WebP, and AVIF files in `git diff` and only compresses those files—that approach makes Imagemin Guard more efficient in operation.
 
 ## How Does the Output Look Like?
+
+Roughly like this (the screenshot shows an early version of Imagemin Merlin):
 
 ![Screenshot of Imagemin Guard’s predecessor, Merlin, in operation.](https://raw.githubusercontent.com/j9t/imagemin-guard/master/media/output.png)
 
@@ -66,7 +68,7 @@ Unless manual compression is triggered, automated compression works through Git 
 
 Through this approach, though still glossed over here, Imagemin Guard makes up for what’s missing or complicated in imagemin and related packages, namely easy, riskless, automated, resource-friendly “on-site” optimization.
 
-### Why Use Imagemin Guard?
+## Why Use Imagemin Guard?
 
 (This is a paraphrased remainder of earlier documentation, left in case it makes anything more clear ☺️)
 
