@@ -29,8 +29,7 @@ const compression = async (filename, dry) => {
     output = `/tmp/imagemin-guard/${parsePath(filename).absolute}`
   }
 
-  /* Hacky (and WET) way of assigning options to each file format, and avoiding option collisions */
-  let option = '(option)'
+  let option
   if(filename.endsWith('avif')) {
     option = imageminAvif(options.avif)
   } else if(filename.endsWith('gif')) {
@@ -42,7 +41,7 @@ const compression = async (filename, dry) => {
   } else if(filename.endsWith('webp')) {
     option = imageminWebp(options.webp)
   } else {
-    /* Hacky way of avoiding complete failure */
+    /* Hacky way of averting disaster */
     option = imageminGifsicle()
   }
 
