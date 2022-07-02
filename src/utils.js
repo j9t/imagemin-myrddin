@@ -29,22 +29,32 @@ const compression = async (filename, dry) => {
     output = `/tmp/imagemin-guard/${parsePath(filename).absolute}`
   }
 
-  // @@ Enable WebP and AVIF support
+  /* Hacky (and WET) way of assigning options to each file format, and avoiding option collisions */
+  let option = '(option)'
+  if(filename.endsWith('avif')) {
+    option = imageminAvif(options.avif)
+  } else if(filename.endsWith('gif')) {
+    option = imageminGifsicle(options.gifsicle)
+  } else if(filename.endsWith('jpg' || 'jpeg')) {
+    option = imageminMozjpeg(options.mozjpeg)
+  } else if(filename.endsWith('png')) {
+    option = imageminOptipng(options.optipng)
+  } else if(filename.endsWith('webp')) {
+    option = imageminWebp(options.webp)
+  } else {
+    /* Hacky way of avoiding complete failure */
+    option = imageminGifsicle()
+  }
+
   await imagemin([filename], {
     destination: output,
-    plugins: [
-      imageminMozjpeg(options.mozjpeg),
-      imageminOptipng(options.optipng),
-      imageminGifsicle(options.gifsicle),
-      /* imageminWebp(options.webp),
-      imageminAvif(options.avif), */
-    ]
+    plugins: [ option ]
   })
   const fileSizeAfter = size(`${output}/${parsePath(filename).base}`)
 
   let color = 'white'
   let status = 'Skipped'
-  let details = 'already optimized'
+  let details = 'already compressed'
 
   if(fileSizeAfter < fileSizeBefore){
     color = 'green'
@@ -53,7 +63,7 @@ const compression = async (filename, dry) => {
   } else if(fileSizeAfter > fileSizeBefore){ // File size is bigger than before
     color = 'blue'
     status = 'Skipped'
-    details = 'more optimized'
+    details = 'even more compressed'
 
     // Restore the backup’ed file
     fs.renameSync(filenameBackup, filename)
@@ -70,7 +80,7 @@ const compression = async (filename, dry) => {
   )
 
   if(fileSizeAfter === 0){
-    console.error(chalk.bold.red(`Something went wrong, new filesize is ${filesize(fileSizeAfter)}`))
+    console.error(chalk.bold.red(`Something went wrong, new file size is ${filesize(fileSizeAfter)}`))
   }
 
   return fileSizeAfter < fileSizeBefore ? fileSizeBefore - fileSizeAfter : 0

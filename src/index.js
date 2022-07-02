@@ -22,15 +22,14 @@ import { hideBin } from 'yargs/helpers'
   // Share status
   const summary = (run) => {
     if(run){
-      console.info(`\nImages optimized. You saved ${utils.sizeReadable(savedKB)}.`)
+      console.info(`\nDefensive base compression completed. You saved ${utils.sizeReadable(savedKB)}.`)
     } else {
-      console.info('\nThere were no images to optimize.')
+      console.info('There were no images to compress.')
     }
   }
 
-  // Files to be optimized
-  // const fileTypes = ['avif', 'gif', 'jpg', 'jpeg', 'png', 'webp']
-  const fileTypes = ['gif', 'jpg', 'jpeg', 'png']
+  // Files to be compressed
+  const fileTypes = ['avif', 'gif', 'jpg', 'jpeg', 'png', 'webp']
   console.log(`(Search pattern: ${fileTypes.join(', ')})\n`)
 
   let savedKB = 0
@@ -68,7 +67,7 @@ import { hideBin } from 'yargs/helpers'
 
   const patterns = getFilePattern(argv.ignore)
   let files = findFiles(patterns)
-  let compressFiles = files
+  let compressionFiles = files
 
   // Search for staged files
   if(argv.staged){
@@ -77,14 +76,14 @@ import { hideBin } from 'yargs/helpers'
         return console.error(err)
       }
 
-      compressFiles = results
+      compressionFiles = results
         .map(result => result.filename)
         .filter(filename => files.includes(filename))
 
-      compress(compressFiles, argv.dry)
+      compress(compressionFiles, argv.dry)
     })
   } else {
-    compress(compressFiles, argv.dry)
+    compress(compressionFiles, argv.dry)
   }
 
 })()
