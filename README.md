@@ -54,7 +54,7 @@ The `--staged` parameter triggers a mode that watches JPG, PNG, GIF, WebP, and A
 
 ## How Does the Output Look Like?
 
-![Screenshot of Imagemin Guard’s predecessor, Merlin, in operation.](https://raw.githubusercontent.com/j9t/imagemin-guard/master/docs/media/output.png)
+![Screenshot of Imagemin Guard’s predecessor, Merlin, in operation.](https://raw.githubusercontent.com/j9t/imagemin-guard/master/media/output.png)
 
 * Green: The image file has been optimized.
 * White: The image file has not been changed.
