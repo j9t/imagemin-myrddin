@@ -28,6 +28,8 @@ npx imagemin-guard
 
 To make sure that _all_ images are being compressed, it’s recommended to run Imagemin Guard like this at least once, after installation.
 
+(In repositories with large numbers of images, you may run into `MaxBufferError`s on `stdout`. This is under investigation, and suggestions are welcome. You can work around this using the `--ignore` parameter, as described below; or you could do this step with another tool, if at all, and use Imagemin Guard for automated compression as follows.)
+
 ### 2b) Set Up Automatic Compression
 
 For automated use, Imagemin Guard should be triggered through a [Git hook](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks) or a related tool like [Husky](https://github.com/typicode/husky) (`npm i -D husky`), for example on `pre-commit`.
