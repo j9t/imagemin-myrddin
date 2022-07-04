@@ -28,7 +28,7 @@ npx imagemin-guard
 
 To make sure that _all_ images are being compressed, it’s recommended to run Imagemin Guard like this at least once, after installation.
 
-(In repositories with large numbers of images, you may run into `MaxBufferError`s on `stdout`. This is under investigation, and suggestions are welcome. You can work around this using the `--ignore` parameter, as described below; or you could do this step with another tool, if at all, and use Imagemin Guard for automated compression as follows.)
+(In repositories with large images, you may run into `MaxBufferError`s on `stdout`. You can work around this by using the `--ignore` parameter, as described below, and ignoring the respective file(s); or you could do this step with another tool, if at all, and use Imagemin Guard for automated compression as follows.)
 
 ### 2b) Set Up Automatic Compression
 
