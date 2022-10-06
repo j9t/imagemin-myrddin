@@ -1,6 +1,6 @@
 // This file, which had been forked from imagemin-merlin, was modified for imagemin-guard: https://github.com/sumcumo/imagemin-merlin/compare/master...j9t:master
 
-import filesize from 'filesize'
+import {filesize, partial} from 'filesize'
 import fs from 'fs'
 import parsePath from 'parse-filepath'
 import imagemin from 'imagemin'
@@ -89,8 +89,6 @@ const size = (file) => {
   return fs.statSync(file)['size']
 }
 
-const sizeReadable = (size) => {
-  return filesize(size, { round: 5 })
-}
+const sizeReadable = partial(size, { round: 5 })
 
 export const utils = { compression, sizeReadable }
