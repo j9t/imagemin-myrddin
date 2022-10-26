@@ -25,7 +25,7 @@
     "avif"
   ],
   "dependencies": {
-    "chalk": "^5.0.1",
+    "chalk": "^5.1.2",
     "filesize": "^10.0.5",
     "globby": "^13.1.2",
     "imagemin-avif": "^0.1.3",
