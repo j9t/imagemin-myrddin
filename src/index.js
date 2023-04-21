@@ -1,6 +1,6 @@
 // This file, which had been forked from imagemin-merlin, was modified for imagemin-guard: https://github.com/sumcumo/imagemin-merlin/compare/master...j9t:master
 
-import rimraf from 'rimraf'
+import { rimraf } from 'rimraf'
 import { globbySync } from 'globby';
 import sgf from 'staged-git-files'
 import { utils } from './utils.js'
