@@ -44,6 +44,8 @@ git add .husky/pre-commit;\
 git commit -m "feat: add Husky pre-commit hook for Imagemin Guard"
 ```
 
+(Note: A couple of years later, this may now be as simple as invoking `npx husky init`. To be tested and updated.)
+
 ### Parameters
 
 `--dry` allows to run Imagemin Guard in “dry mode.” All changed files can then be inspected under `/tmp/imagemin-guard`.
