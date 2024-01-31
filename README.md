@@ -34,17 +34,14 @@ To make sure that _all_ images are being compressed, it’s recommended to run I
 
 For automated use, Imagemin Guard should be triggered through a [Git hook](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks) or a related tool like [Husky](https://github.com/typicode/husky) (`npm i -D husky`), for example on `pre-commit`.
 
-For that, using Husky as an example, run the following commands (you can copy and execute them at once):
+For that, using Husky as an example, run the following commands in your project root (you can copy and execute them at once):
 
 ```console
-npm set-script prepare "husky install";\
-npm run prepare;\
-npx husky add .husky/pre-commit "npx imagemin-guard --staged";\
+npx husky init;\
+echo "npx imagemin-guard --staged" > .husky/pre-commit;\
 git add .husky/pre-commit;\
 git commit -m "feat: add Husky pre-commit hook for Imagemin Guard"
 ```
-
-(Note: A couple of years later, this may now be as simple as invoking `npx husky init`. To be tested and updated.)
 
 ### Parameters
 
