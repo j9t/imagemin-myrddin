@@ -2,12 +2,12 @@
   "name": "@j9t/imagemin-guard",
   "description": "Ensure losslessly compressed JPG, PNG, GIF, WebP, and AVIF images (suitable for manual and automatic compression)",
   "author": "Jens Oliver Meiert",
-  "version": "3.2.19",
+  "version": "3.2.20",
   "type": "module",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "git@github.com:j9t/imagemin-guard.git"
+    "url": "git+ssh://git@github.com/j9t/imagemin-guard.git"
   },
   "homepage": "https://github.com/j9t/imagemin-guard",
   "keywords": [
@@ -38,7 +38,7 @@
     "yargs": "^17.7.2"
   },
   "bin": {
-    "imagemin-guard": "./bin/imagemin-guard.js",
-    "imagemin-merlin": "./bin/imagemin-guard.js"
+    "imagemin-guard": "bin/imagemin-guard.js",
+    "imagemin-merlin": "bin/imagemin-guard.js"
   }
 }
