@@ -93,7 +93,7 @@ Thoughts or suggestions? Please [file an issue](https://github.com/j9t/imagemin-
 
 ## License
 
-Copyright 2019 [sum.cumo GmbH](https://www.sumcumo.com/)
+Copyright 2019 [sum.cumo GmbH](https://web.archive.org/web/20191208211414/https://www.sumcumo.com/)
 
 Copyright 2022 [Jens Oliver Meiert](https://meiert.com/en/)
 
