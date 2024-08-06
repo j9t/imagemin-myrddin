@@ -20,11 +20,25 @@ function copyFiles(srcDir, destDir) {
 
 // Function to check if images are compressed
 function areImagesCompressed(dir) {
-  // Implement a simple check, e.g., file size reduction
+  // Implement a check based on actual compression logic
   return fs.readdirSync(dir).every(file => {
     const filePath = path.join(dir, file);
-    const stats = fs.statSync(filePath);
-    return stats.size < 100000; // Example threshold
+    const originalFilePath = path.join(testFolder, file);
+    const originalStats = fs.statSync(originalFilePath);
+    const compressedStats = fs.statSync(filePath);
+    return compressedStats.size < originalStats.size;
+  });
+}
+
+// Function to check if images are already compressed
+function areImagesAlreadyCompressed(dir) {
+  // Implement a check based on actual compression logic
+  return fs.readdirSync(dir).some(file => {
+    const filePath = path.join(dir, file);
+    const originalFilePath = path.join(testFolder, file);
+    const originalStats = fs.statSync(originalFilePath);
+    const compressedStats = fs.statSync(filePath);
+    return compressedStats.size >= originalStats.size;
   });
 }
 
@@ -40,6 +54,9 @@ describe('imagemin-guard script', () => {
   });
 
   test('Compress images in media/test folder [in temp location]', () => {
+    // Ensure images in temp folder are not already compressed
+    expect(areImagesAlreadyCompressed(tempFolder)).toBe(true);
+
     // Run imagemin-guard script
     execSync(`node ${imageminGuardScript} --ignore=media/test`);
 
