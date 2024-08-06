@@ -2,9 +2,9 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 
-const mediaTestFolder = path.join(__dirname, '../media/test');
+const testFolder = path.join(__dirname, '../media/test');
 const tempFolder = path.join(__dirname, '../media/temp');
-const imageminGuardScript = path.join(__dirname, 'imagemin-guard.js');
+const imageminGuardScript = path.join(__dirname, '../bin/imagemin-guard.js');
 
 // Function to copy files
 function copyFiles(srcDir, destDir) {
@@ -31,21 +31,19 @@ function areImagesCompressed(dir) {
 describe('imagemin-guard script', () => {
   beforeAll(() => {
     // Backup original images
-    copyFiles(mediaTestFolder, tempFolder);
+    copyFiles(testFolder, tempFolder);
   });
 
   afterAll(() => {
-    // Revert images to original state
-    copyFiles(tempFolder, mediaTestFolder);
     // Clean up temporary folder
     fs.rmdirSync(tempFolder, { recursive: true });
   });
 
   test('should compress images in media/test folder', () => {
     // Run imagemin-guard script
-    execSync(`node ${imageminGuardScript}`);
+    execSync(`node ${imageminGuardScript} --ignore=media/test`);
 
     // Verify images are compressed
-    expect(areImagesCompressed(mediaTestFolder)).toBe(true);
+    expect(areImagesCompressed(tempFolder)).toBe(true);
   });
 });
