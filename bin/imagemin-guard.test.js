@@ -36,7 +36,7 @@ describe('imagemin-guard script', () => {
 
   afterAll(() => {
     // Clean up temporary folder
-    fs.rmdirSync(tempFolder, { recursive: true });
+    fs.rmSync(tempFolder, { recursive: true });
   });
 
   test('Compress images in media/test folder [in temp location]', () => {
