@@ -39,7 +39,7 @@ describe('imagemin-guard script', () => {
     fs.rmdirSync(tempFolder, { recursive: true });
   });
 
-  test('should compress images in media/test folder', () => {
+  test('Compress images in media/test folder [in temp location]', () => {
     // Run imagemin-guard script
     execSync(`node ${imageminGuardScript} --ignore=media/test`);
 
