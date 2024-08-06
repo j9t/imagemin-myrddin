@@ -5,6 +5,7 @@ const { execSync } = require('child_process');
 const testFolder = path.join(__dirname, '../media/test');
 const tempFolder = path.join(__dirname, '../media/temp');
 const imageminGuardScript = path.join(__dirname, '../bin/imagemin-guard.js');
+const allowedFileTypes = ['avif', 'gif', 'jpg', 'jpeg', 'png', 'webp'];
 
 // Function to copy files
 function copyFiles(srcDir, destDir) {
@@ -22,6 +23,8 @@ function copyFiles(srcDir, destDir) {
 function areImagesCompressed(dir) {
   const uncompressedFiles = [];
   const allCompressed = fs.readdirSync(dir).every(file => {
+    const ext = path.extname(file).slice(1);
+    if (!allowedFileTypes.includes(ext)) return true;
     const filePath = path.join(dir, file);
     const originalFilePath = path.join(testFolder, file);
     const originalStats = fs.statSync(originalFilePath);
@@ -38,6 +41,8 @@ function areImagesCompressed(dir) {
 // Function to check if images are already compressed
 function areImagesAlreadyCompressed(dir) {
   return fs.readdirSync(dir).some(file => {
+    const ext = path.extname(file).slice(1);
+    if (!allowedFileTypes.includes(ext)) return false;
     const filePath = path.join(dir, file);
     const originalFilePath = path.join(testFolder, file);
     const originalStats = fs.statSync(originalFilePath);
@@ -57,7 +62,7 @@ describe('imagemin-guard script', () => {
     fs.rmSync(tempFolder, { recursive: true });
   });
 
-  test('Compress images in media/test folder [in temp location]', () => {
+  test('Compress images from media/test folder (in temp location)', () => {
     // Ensure images in temp folder are not already compressed
     expect(areImagesAlreadyCompressed(tempFolder)).toBe(true);
 
@@ -66,8 +71,8 @@ describe('imagemin-guard script', () => {
 
     // Verify images are compressed
     const { allCompressed, uncompressedFiles } = areImagesCompressed(tempFolder);
-    if (!allCompressed) {
-      console.log('The following files were not compressed:', uncompressedFiles);
+    if (uncompressedFiles.length > 0) {
+      console.log('The following files were not compressed:', uncompressedFiles.join(', '));
     }
     expect(allCompressed).toBe(true);
   });
