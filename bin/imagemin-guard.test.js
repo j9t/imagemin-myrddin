@@ -5,6 +5,8 @@ const { execSync } = require('child_process');
 const testFolder = path.join(__dirname, '../media/test');
 const tempFolder = path.join(__dirname, '../media/temp');
 const imageminGuardScript = path.join(__dirname, '../bin/imagemin-guard.js');
+// Crutch to avoid files like .DS_Store to sneak in
+// @@ Consolidate with package, to keep image definitions DRY
 const allowedFileTypes = ['avif', 'gif', 'jpg', 'jpeg', 'png', 'webp'];
 
 // Function to copy files
@@ -72,6 +74,7 @@ describe('imagemin-guard script', () => {
     // Verify images are compressed
     const { allCompressed, uncompressedFiles } = areImagesCompressed(tempFolder);
     if (uncompressedFiles.length > 0) {
+      // @@ Ensure all compressed files are listed
       console.log('The following files were not compressed:', uncompressedFiles.join(', '));
     }
     expect(allCompressed).toBe(true);
