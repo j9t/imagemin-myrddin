@@ -52,7 +52,7 @@ function areImagesAlreadyCompressed(dir) {
   });
 }
 
-describe('imagemin-guard script', () => {
+describe('Imagemin Guard', () => {
   beforeAll(() => {
     // Backup original images
     copyFiles(testFolder, tempFolder);
