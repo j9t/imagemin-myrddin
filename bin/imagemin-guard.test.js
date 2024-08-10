@@ -1,7 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
-
 const testFolder = path.join(__dirname, '../media/test');
 const tempFolder = path.join(__dirname, '../media/temp');
 const imageminGuardScript = path.join(__dirname, '../bin/imagemin-guard.js');
