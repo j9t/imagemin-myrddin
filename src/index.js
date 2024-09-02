@@ -71,8 +71,8 @@ import { hideBin } from 'yargs/helpers'
 
   // Search for staged files
   if(argv.staged){
-    sgf('A', async function(err, results){
-      if(err){
+    await sgf('A', async function (err, results) {
+      if (err) {
         return console.error(err)
       }
 
@@ -80,10 +80,10 @@ import { hideBin } from 'yargs/helpers'
         .map(result => result.filename)
         .filter(filename => files.includes(filename))
 
-      compress(compressionFiles, argv.dry)
+      await compress(compressionFiles, argv.dry)
     })
   } else {
-    compress(compressionFiles, argv.dry)
+    await compress(compressionFiles, argv.dry)
   }
 
 })()
