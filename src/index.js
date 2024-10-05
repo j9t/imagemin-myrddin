@@ -1,27 +1,26 @@
 // This file, which had been forked from imagemin-merlin, was modified for imagemin-guard: https://github.com/sumcumo/imagemin-merlin/compare/master...j9t:master
 
 import { rimraf } from 'rimraf'
-import { globbySync } from 'globby';
+import { globbySync } from 'globby'
 import sgf from 'staged-git-files'
 import { utils } from './utils.js'
 import _yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
 
 (async () => {
-  const yargs = _yargs(hideBin(process.argv));
-  const argv = await yargs
-    .argv
+  const yargs = _yargs(hideBin(process.argv))
+  const argv = await yargs.argv
 
   // Test
   // console.log(argv)
 
-  if(argv.dry){
+  if (argv.dry) {
     rimraf.sync('/tmp/imagemin-guard')
   }
 
   // Share status
   const summary = (run) => {
-    if(run){
+    if (run) {
       console.info(`\nDefensive base compression completed. You saved ${utils.sizeReadable(savedKB)}.`)
     } else {
       console.info('There were no images to compress.')
@@ -51,7 +50,7 @@ import { hideBin } from 'yargs/helpers'
       patterns.push(`**/*.${fileType}`)
     })
 
-    if(ignore){
+    if (ignore) {
       const ignorePaths = ignore.split(',')
       ignorePaths.forEach((path) => {
         patterns.push(`!${path}`)
@@ -70,7 +69,7 @@ import { hideBin } from 'yargs/helpers'
   let compressionFiles = files
 
   // Search for staged files
-  if(argv.staged){
+  if (argv.staged) {
     await sgf('A', async function (err, results) {
       if (err) {
         return console.error(err)
@@ -85,5 +84,4 @@ import { hideBin } from 'yargs/helpers'
   } else {
     await compress(compressionFiles, argv.dry)
   }
-
 })()
