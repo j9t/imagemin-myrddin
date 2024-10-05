@@ -1,8 +1,9 @@
 const fs = require('fs')
 const path = require('path')
 const { execSync } = require('child_process')
+const simpleGit = require('simple-git')
 const testFolder = path.join(__dirname, '../media/test')
-const tempFolder = path.join(__dirname, '../media/temp')
+const testFolderGit = path.join(__dirname, '../media/test-git')
 const imageminGuardScript = path.join(__dirname, '../bin/imagemin-guard.js')
 // Crutch to avoid files like .DS_Store to sneak in
 // @@ Consolidate with package, to keep image definitions DRY
@@ -55,25 +56,52 @@ function areImagesAlreadyCompressed(dir) {
 describe('Imagemin Guard', () => {
   beforeAll(() => {
     // Backup original images
-    copyFiles(testFolder, tempFolder)
+    copyFiles(testFolder, testFolderGit)
   })
 
   afterAll(() => {
     // Clean up temporary folder
-    fs.rmSync(tempFolder, { recursive: true })
+    fs.rmSync(testFolderGit, { recursive: true })
   })
 
   test('Compress images from media/test folder (in temp location)', () => {
     // Ensure images in temp folder are not already compressed
-    expect(areImagesAlreadyCompressed(tempFolder)).toBe(true)
+    expect(areImagesAlreadyCompressed(testFolderGit)).toBe(true)
 
     // Run imagemin-guard script
     execSync(`node ${imageminGuardScript} --ignore=media/test`)
 
     // Verify images are compressed
-    const { allCompressed, uncompressedFiles } = areImagesCompressed(tempFolder)
+    const { allCompressed, uncompressedFiles } = areImagesCompressed(testFolderGit)
     if (uncompressedFiles.length > 0) {
       // @@ Ensure all compressed files are listed
+      console.log('The following files were not compressed:', uncompressedFiles.join(', '))
+    }
+    expect(allCompressed).toBe(true)
+  })
+
+  test('Compress only staged images from media/test folder (in temp location)', async () => {
+    const git = simpleGit(testFolderGit)
+
+    // Ensure the temp folder exists
+    if (!fs.existsSync(testFolderGit)) {
+      fs.mkdirSync(testFolderGit, { recursive: true })
+    }
+
+    // Initialize a temporary Git repository
+    await git.init()
+    await git.addConfig('user.name', 'Test User')
+    await git.addConfig('user.email', 'test@example.com')
+
+    // Stage files
+    await git.add('.')
+
+    // Run imagemin-guard script with --staged option
+    execSync(`node ${imageminGuardScript} --staged`, { cwd: testFolderGit })
+
+    // Verify images are compressed
+    const { allCompressed, uncompressedFiles } = areImagesCompressed(testFolderGit)
+    if (uncompressedFiles.length > 0) {
       console.log('The following files were not compressed:', uncompressedFiles.join(', '))
     }
     expect(allCompressed).toBe(true)

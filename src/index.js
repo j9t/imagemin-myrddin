@@ -2,7 +2,7 @@
 
 import { rimraf } from 'rimraf'
 import { globbySync } from 'globby'
-import sgf from 'staged-git-files'
+import simpleGit from 'simple-git'
 import { utils } from './utils.js'
 import _yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
@@ -70,17 +70,14 @@ import { hideBin } from 'yargs/helpers'
 
   // Search for staged files
   if (argv.staged) {
-    await sgf('A', async function (err, results) {
-      if (err) {
-        return console.error(err)
-      }
-
-      compressionFiles = results
-        .map(result => result.filename)
-        .filter(filename => files.includes(filename))
-
+    const git = simpleGit()
+    try {
+      const status = await git.status()
+      compressionFiles = status.staged.filter(filename => files.includes(filename))
       await compress(compressionFiles, argv.dry)
-    })
+    } catch (err) {
+      console.error(err)
+    }
   } else {
     await compress(compressionFiles, argv.dry)
   }
