@@ -87,7 +87,7 @@ The point is: Micro-optimization still needs to be taken care of through other m
 
 Following [Merlin](https://github.com/sumcumo/imagemin-merlin), which Imagemin Guard is based on, new features may include the option to configure the underlying imagemin plugins (somewhat prepared but not completed yet), or supporting projects in which the project’s .git folder is not at the same level as its package.json (at the moment, automatic mode doesn’t work in these cases).
 
-Also, as some imagemin packages are not maintained at the moment, it may be useful or necessary to change to a different compression solution, like [Sqoosh](https://github.com/GoogleChromeLabs/squoosh). The situation is being monitored. Ideally, any change here will only happen under the hood.
+Also, as some imagemin packages are not maintained at the moment, it may be useful or necessary to change to a different compression solution. The situation is being monitored. Ideally, any change here will only happen under the hood.
 
 Thoughts or suggestions? Please [file an issue](https://github.com/j9t/imagemin-guard/issues/new) or send a pull request (some code still needs care). Thank you!
 
