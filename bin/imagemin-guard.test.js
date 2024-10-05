@@ -64,7 +64,7 @@ describe('Imagemin Guard', () => {
     fs.rmSync(testFolderGit, { recursive: true })
   })
 
-  test('Compress images from media/test folder (in temp location)', () => {
+  test('Compress images', () => {
     // Ensure images in temp folder are not already compressed
     expect(areImagesAlreadyCompressed(testFolderGit)).toBe(true)
 
@@ -80,7 +80,7 @@ describe('Imagemin Guard', () => {
     expect(allCompressed).toBe(true)
   })
 
-  test('Compress only staged images from media/test folder (in temp location)', async () => {
+  test('Compress only staged images', async () => {
     const git = simpleGit(testFolderGit)
 
     // Ensure the temp folder exists
