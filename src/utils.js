@@ -16,7 +16,7 @@ const compression = async (filename, dry) => {
 
   if (fileSizeBefore === 0) {
     console.info(chalk.blue(`Skipping ${filename}, it has ${sizeReadable(fileSizeBefore)}`))
-    return
+    return 0
   }
 
   const tempFilePath = path.join(os.tmpdir(), path.basename(filename))
@@ -45,10 +45,7 @@ const compression = async (filename, dry) => {
         .toFile(tempFilePath)
     }
 
-    fs.copyFileSync(tempFilePath, filename)
-    fs.unlinkSync(tempFilePath)
-
-    const fileSizeAfter = size(filename)
+    const fileSizeAfter = size(tempFilePath)
 
     let color = 'white'
     let status = 'Skipped'
@@ -62,14 +59,16 @@ const compression = async (filename, dry) => {
       color = 'blue'
       status = 'Skipped'
       details = 'even more compressed'
-
-      // Restore the backup’ed file
-      fs.renameSync(filenameBackup, filename)
     }
 
-    if (fs.existsSync(filenameBackup)) {
-      fs.unlinkSync(filenameBackup)
+    if (dry) {
+      console.info(chalk.gray(`Dry run: ${status} ${filename} (${details})`))
+      fs.unlinkSync(tempFilePath)
+      return 0
     }
+
+    fs.copyFileSync(tempFilePath, filename)
+    fs.unlinkSync(tempFilePath)
 
     console.info(
       chalk[color](`${status} ${filename} (${details})`)
@@ -84,6 +83,10 @@ const compression = async (filename, dry) => {
     console.error(`Error compressing ${filename}:`, err)
     fs.renameSync(filenameBackup, filename)
     return 0
+  } finally {
+    if (fs.existsSync(filenameBackup)) {
+      fs.unlinkSync(filenameBackup)
+    }
   }
 }
 
