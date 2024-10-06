@@ -74,7 +74,6 @@ describe('Imagemin Guard', () => {
     // Verify images are compressed
     const { allCompressed, uncompressedFiles } = areImagesCompressed(testFolderGit)
     if (uncompressedFiles.length > 0) {
-      // @@ Ensure all compressed files are listed
       console.log('The following files were not compressed:', uncompressedFiles.join(', '))
     }
     expect(allCompressed).toBe(true)
