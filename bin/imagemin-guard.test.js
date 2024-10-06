@@ -55,7 +55,7 @@ function areImagesAlreadyCompressed(dir) {
 
 describe('Imagemin Guard', () => {
   beforeAll(() => {
-    // Backup original images
+    // Back up original images
     copyFiles(testFolder, testFolderGit)
   })
 
@@ -105,5 +105,23 @@ describe('Imagemin Guard', () => {
       console.log('The following files were not compressed:', uncompressedFiles.join(', '))
     }
     expect(allCompressed).toBe(true)
+  })
+
+  test('Do not modify files in dry run', () => {
+    const originalStats = fs.readdirSync(testFolderGit).map(file => {
+      const filePath = path.join(testFolderGit, file)
+      return { file, stats: fs.statSync(filePath) }
+    })
+    execSync(`node ${imageminGuardScript} --dry`)
+    const newStats = fs.readdirSync(testFolderGit).map(file => {
+      const filePath = path.join(testFolderGit, file)
+      return { file, stats: fs.statSync(filePath) }
+    })
+    originalStats.forEach((original, index) => {
+      const newFile = newStats[index]
+      expect(newFile.file).toStrictEqual(original.file)
+      expect(newFile.stats.size).toStrictEqual(original.stats.size)
+      expect(newFile.stats.mtime).toStrictEqual(original.stats.mtime)
+    })
   })
 })
