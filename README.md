@@ -1,8 +1,8 @@
 # Imagemin Guard
 
-(This project was based on [sum.cumo’s imagemin-merlin](https://github.com/sumcumo/imagemin-merlin). [Changes are documented](https://github.com/sumcumo/imagemin-merlin/compare/master...j9t:master), and include this README. Imagemin Guard supports two additional file formats—WebP and AVIF—, comes with improved code and documentation, and is being maintained—including automatically updated dependencies.)
+(This project was based on [sum.cumo’s imagemin-merlin](https://github.com/sumcumo/imagemin-merlin). [Changes are documented](https://github.com/sumcumo/imagemin-merlin/compare/master...j9t:master), and include this README. Imagemin Guard supports two additional file formats—WebP and AVIF—, comes with improved code and documentation, and is being maintained.)
 
-Imagemin Guard takes care of lossless compression of your images, to help you avoid bloat in your repositories. It’s an extension of [imagemin](https://www.npmjs.com/package/imagemin) and a fork of [imagemin-merlin (Merlin)](https://github.com/sumcumo/imagemin-merlin) that makes it convenient and safe to automatically compress JPG, PNG, GIF, WebP, and AVIF images.
+Imagemin Guard—which had been, but isn’t anymore, based on other imagemin packages—takes care of lossless compression of your images, to help you avoid bloat in your repositories. It makes it convenient and safe to automatically compress JPG, PNG, GIF, WebP, and AVIF images.
 
 It’s convenient because setup is simple. Install, run, add hook, done.
 
@@ -63,7 +63,7 @@ Roughly like this (the screenshot shows an early version of Merlin):
 
 ## How Does Imagemin Guard Work?
 
-Imagemin Guard is a Node script that puts a wrapper around [sharp](https://www.npmjs.com/package/sharp) and [gifsicle](https://www.npmjs.com/package/gifsicle).
+Imagemin Guard is a Node script currently using [sharp](https://www.npmjs.com/package/sharp) and [gifsicle](https://www.npmjs.com/package/gifsicle) under the hood.
 
 Automated compression works by monitoring whether a given change list includes any JPGs, PNGs, GIFs, WebPs, or AVIFs. It’s initiated by a Git hook. Only those images are compressed where there is an improvement. The compressed images can then be committed to the underlying repository.
 
