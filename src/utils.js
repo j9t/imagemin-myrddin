@@ -1,6 +1,5 @@
 // This file, which had been forked from imagemin-merlin, was modified for imagemin-guard: https://github.com/sumcumo/imagemin-merlin/compare/master...j9t:master
 
-import { options } from './plugins.js'
 import chalk from 'chalk'
 import { execFileSync } from 'child_process'
 import fs from 'fs'
@@ -42,7 +41,7 @@ const compression = async (filename, dry) => {
       execFileSync(gifsicle, ['-O3', filename, '-o', tempFilePath])
     } else {
       await sharp(filename)
-        .toFormat(outputFormat, { quality: options[outputFormat]?.quality || 100 })
+        .toFormat(outputFormat, { lossless: true, quality: 100 })
         .toFile(tempFilePath)
     }
 
