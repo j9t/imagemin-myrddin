@@ -1,9 +1,9 @@
 // This file, which had been forked from imagemin-merlin, was modified for imagemin-guard: https://github.com/sumcumo/imagemin-merlin/compare/master...j9t:master
 
-import { rimraf } from 'rimraf'
-import { globbySync } from 'globby'
-import simpleGit from 'simple-git'
 import { utils } from './utils.js'
+import { globbySync } from 'globby'
+import { rimraf } from 'rimraf'
+import simpleGit from 'simple-git'
 import _yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
 

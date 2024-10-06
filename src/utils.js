@@ -1,13 +1,13 @@
 // This file, which had been forked from imagemin-merlin, was modified for imagemin-guard: https://github.com/sumcumo/imagemin-merlin/compare/master...j9t:master
 
-import sharp from 'sharp'
-import fs from 'fs'
-import path from 'path'
-import os from 'os'
-import chalk from 'chalk'
 import { options } from './plugins.js'
-import gifsicle from 'gifsicle'
+import chalk from 'chalk'
 import { execFileSync } from 'child_process'
+import fs from 'fs'
+import gifsicle from 'gifsicle'
+import os from 'os'
+import path from 'path'
+import sharp from 'sharp'
 
 const compression = async (filename, dry) => {
   const filenameBackup = `${filename}.bak`
