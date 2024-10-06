@@ -6,7 +6,7 @@ const testFolder = path.join(__dirname, '../media/test')
 const testFolderGit = path.join(__dirname, '../media/test-git')
 const imageminGuardScript = path.join(__dirname, '../bin/imagemin-guard.js')
 // Crutch to avoid files like .DS_Store to sneak in
-// @@ Consolidate with package, to keep image definitions DRY
+// @@ Consolidate with package, to keep image definitions DRY (once there’s better Jest ESM support?)
 const allowedFileTypes = ['avif', 'gif', 'jpg', 'jpeg', 'png', 'webp']
 
 // Function to copy files
