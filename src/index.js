@@ -11,13 +11,6 @@ import { hideBin } from 'yargs/helpers'
   const yargs = _yargs(hideBin(process.argv))
   const argv = await yargs.argv
 
-  // Test
-  // console.log(argv)
-
-  if (argv.dry) {
-    rimraf.sync('/tmp/imagemin-guard')
-  }
-
   // Share status
   const summary = (run) => {
     if (run) {
