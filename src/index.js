@@ -40,7 +40,7 @@ import { hideBin } from 'yargs/helpers'
     const patterns = []
 
     fileTypes.forEach((fileType) => {
-      patterns.push(`**/*.${fileType}`)
+      patterns.push(`**/*.${fileType}`, `**/*.${fileType.toUpperCase()}`)
     })
 
     if (ignore) {

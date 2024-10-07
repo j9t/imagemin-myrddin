@@ -22,7 +22,7 @@ const compression = async (filename, dry) => {
   const tempFilePath = path.join(os.tmpdir(), path.basename(filename))
 
   try {
-    const ext = path.extname(filename).slice(1)
+    const ext = path.extname(filename).slice(1).toLowerCase()
     if (!ext) {
       throw new Error(`Cannot determine file type for ${filename}; no extension found.`)
     }
