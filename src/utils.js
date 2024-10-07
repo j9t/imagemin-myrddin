@@ -12,7 +12,7 @@ const compression = async (filename, dry) => {
   const filenameBackup = `${filename}.bak`
   fs.copyFileSync(filename, filenameBackup)
 
-  const fileSizeBefore = size(filename)
+  const fileSizeBefore = await size(filename)
 
   if (fileSizeBefore === 0) {
     console.info(chalk.blue(`Skipping ${filename}, it has ${sizeReadable(fileSizeBefore)}`))
@@ -41,14 +41,14 @@ const compression = async (filename, dry) => {
         .avif({ lossless: true })
         .toFile(tempFilePath)
     } else if (outputFormat === 'gif') {
-      await execFileSync(gifsicle, ['-O3', filename, '-o', tempFilePath])
+      execFileSync(gifsicle, ['-O3', filename, '-o', tempFilePath])
     } else {
       await sharp(filename)
         .toFormat(outputFormat, { lossless: true, quality: 100 })
         .toFile(tempFilePath)
     }
 
-    const fileSizeAfter = size(tempFilePath)
+    const fileSizeAfter = await size(tempFilePath)
 
     let color = 'white'
     let status = 'Skipped'
@@ -95,10 +95,11 @@ const compression = async (filename, dry) => {
   }
 }
 
-const size = (file) => {
-  return fs.statSync(file)['size']
+const size = async (file) => {
+  const stats = await fs.promises.stat(file)
+  return stats.size
 }
 
-const sizeReadable = (size) => `${(size / 1024).toFixed(2)} KB`
+const sizeReadable = (size) => `${(size / 1024).toFixed(2)} KB`
 
 export const utils = { compression, sizeReadable }
