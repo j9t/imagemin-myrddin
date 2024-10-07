@@ -51,7 +51,7 @@ git commit -m "feat: add Husky pre-commit hook for Imagemin Guard"
 
 `--staged` (recommended with automated use) triggers a mode that watches JPG, PNG, GIF, WebP, and AVIF files in `git diff` and only compresses those files—that approach makes Imagemin Guard more efficient in operation.
 
-## How Does the Output Look Like?
+## What Does the Output Look Like?
 
 Roughly like this (the screenshot is still based on an early version of Merlin):
 
