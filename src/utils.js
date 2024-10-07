@@ -44,7 +44,7 @@ const compression = async (filename, dry) => {
       execFileSync(gifsicle, ['-O3', filename, '-o', tempFilePath])
     } else {
       await sharp(filename)
-        .toFormat(outputFormat, { lossless: true, quality: 100 })
+        .toFormat(outputFormat, { quality: 100 })
         .toFile(tempFilePath)
     }
 
@@ -61,7 +61,7 @@ const compression = async (filename, dry) => {
     } else if (fileSizeAfter > fileSizeBefore) {
       color = 'blue'
       status = 'Skipped'
-      details = 'even more compressed'
+      details = 'already better compressed'
     }
 
     if (dry) {
