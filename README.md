@@ -85,9 +85,9 @@ The point is: Micro-optimization still needs to be taken care of through other m
 
 ## What’s Next?
 
-There are a few ideas, like supporting projects in which the project’s .git folder is not at the same level as its package.json (at the moment, automatic mode doesn’t work in these cases).
+There are a few ideas, like supporting projects in which the project’s .git folder is not at the same level as its package.json (currently, automatic mode doesn’t work in these cases).
 
-Feedback is appreciated: Please [file an issue](https://github.com/j9t/imagemin-guard/issues/new) or send a pull request (some code still needs care). Thank you!
+Feedback is appreciated: Please [file an issue](https://github.com/j9t/imagemin-guard/issues/new) or send a pull request. Thank you!
 
 ## License
 

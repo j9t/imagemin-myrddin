@@ -23,6 +23,9 @@ const compression = async (filename, dry) => {
 
   try {
     const ext = path.extname(filename).slice(1)
+    if (!ext) {
+      throw new Error(`Cannot determine file type for ${filename}; no extension found.`)
+    }
     const outputFormat = ext === 'jpg' ? 'jpeg' : ext // sharp uses “jpeg” instead of “jpg”
 
     if (outputFormat === 'png') {
@@ -38,7 +41,7 @@ const compression = async (filename, dry) => {
         .avif({ lossless: true })
         .toFile(tempFilePath)
     } else if (outputFormat === 'gif') {
-      execFileSync(gifsicle, ['-O3', filename, '-o', tempFilePath])
+      await execFileSync(gifsicle, ['-O3', filename, '-o', tempFilePath])
     } else {
       await sharp(filename)
         .toFormat(outputFormat, { lossless: true, quality: 100 })
@@ -84,8 +87,10 @@ const compression = async (filename, dry) => {
     fs.renameSync(filenameBackup, filename)
     return 0
   } finally {
-    if (fs.existsSync(filenameBackup)) {
+    try {
       fs.unlinkSync(filenameBackup)
+    } catch (error) {
+      // If the file doesn’t exist, no action is needed
     }
   }
 }
