@@ -1,12 +1,12 @@
 # Imagemin Guard
 
-(This project was based on [sum.cumo’s imagemin-merlin](https://github.com/sumcumo/imagemin-merlin). [Changes are documented](https://github.com/sumcumo/imagemin-merlin/compare/master...j9t:master), and include this README. Imagemin Guard supports two additional file formats—WebP and AVIF—, comes with improved code and documentation, and is being maintained. For this reason it’s not based on any imagemin packages anymore.)
+(This project was based on [sum.cumo’s imagemin-merlin](https://github.com/sumcumo/imagemin-merlin). [Changes are documented](https://github.com/sumcumo/imagemin-merlin/compare/master...j9t:master), and include this README. Imagemin Guard supports two additional file formats—WebP and AVIF—, comes with improved code and documentation, and is being maintained. For this reason, it’s not based on any imagemin packages anymore.)
 
 Imagemin Guard takes care of near-lossless compression of your images, to help you avoid bloat in your repositories. It makes it convenient and as safe as possible to automatically compress JPG, PNG, GIF, WebP, and AVIF images.
 
 It’s convenient because setup is simple. Install, run, add hook, done.
 
-It’s as safe as possible because compression happens losslessly (near-lossless for PNG and GIF images). Therefore, practically no worries about forgetting to compress images, but no worries about sacrificing too much quality, either. (You can take care of additional optimizations by yourself or through other tooling.)
+It’s as safe as possible because compression happens losslessly (to be precise, near-lossless for PNG and GIF images). That allows you to stop worrying about forgetting to compress images, but also about sacrificing too much quality. (You can take care of additional optimizations by yourself or through other tooling.)
 
 ## Installation and Use
 
@@ -45,9 +45,9 @@ git commit -m "feat: add Husky pre-commit hook for Imagemin Guard"
 
 ### Parameters
 
-`--dry` allows to run Imagemin Guard in “dry mode.” All changes are being shown in the terminal.
+`--dry` allows you to run Imagemin Guard in “dry mode.” All changes are shown in the terminal.
 
-`--ignore` allows to specify paths to be ignored (as in `--ignore=example,test`). Multiple paths have to be separated by comma. (Files and paths specified in .gitignore files are generally ignored.)
+`--ignore` allows you to specify paths to be ignored (as in `--ignore=example,test`). Multiple paths must be separated by commas. (Files and paths specified in .gitignore files are generally ignored.)
 
 `--staged` (recommended with automated use) triggers a mode that watches JPG, PNG, GIF, WebP, and AVIF files in `git diff` and only compresses those files—that approach makes Imagemin Guard more efficient in operation.
 
