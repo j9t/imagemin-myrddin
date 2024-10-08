@@ -67,7 +67,7 @@ Imagemin Guard is a Node script currently using [sharp](https://www.npmjs.com/pa
 
 Automated compression works by monitoring whether a given [change list](https://webglossary.info/terms/change-list/) includes any JPGs, PNGs, GIFs, WebPs, or AVIFs. It’s initiated by a Git hook. Only those images are compressed where there is an improvement. The compressed images can then be committed to the underlying repository.
 
-Through this approach, though still glossed over here, Imagemin Guard makes up for what’s missing or complicated in other packages, namely easy, near-riskless, automated, resource-friendly in-repo optimization.
+Through this approach, though still glossed over here, Imagemin Guard makes up for what’s missing or complicated in other packages, namely easy, near-riskless, automatable, resource-friendly in-repo optimization.
 
 ## Why Use Imagemin Guard?
 
@@ -79,7 +79,7 @@ That last piece is important, as Imagemin Guard compresses near-losslessly, so t
 
 ## What Does Imagemin Guard _Not_ Do?
 
-Imagemin Guard is no substitute for image fine-tuning and micro-optimization. That is difficult to do in an automated fashion, because this type of compression requires [balancing quality and performance](https://meiert.com/en/blog/understanding-image-compression/) and is context-dependent. In its most extreme form, when maximum quality at maximum performance is required from each graphic, micro-optimization is even hard to do manually.
+Imagemin Guard is no substitute for image fine-tuning and micro-optimization. That’s difficult to do in an automated fashion, because this type of compression requires [balancing quality and performance](https://meiert.com/en/blog/understanding-image-compression/) and is context-dependent. In its most extreme form, when maximum quality at maximum performance is required from each graphic, micro-optimization is even hard to do manually.
 
 The point is: Micro-optimization still needs to be taken care of through other means, whether manually or through tools (well including other packages from the [imagemin family](https://github.com/imagemin)). Imagemin Guard just solves the problem that images are checked in or go live that are not compressed _at all_.
 
