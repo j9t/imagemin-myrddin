@@ -1,12 +1,13 @@
 // This file, which had been forked from imagemin-merlin, was modified for imagemin-guard: https://github.com/sumcumo/imagemin-merlin/compare/master...j9t:master
 
 import chalk from 'chalk'
-import { execFileSync } from 'child_process'
+import { execFile } from 'child_process'
 import fs from 'fs'
 import gifsicle from 'gifsicle'
 import os from 'os'
 import path from 'path'
 import sharp from 'sharp'
+import util from 'util'
 
 const logMessage = (message, dry, color = 'yellow') => {
   console.info(chalk[color](`${dry ? 'Dry run: ' : ''}${message}`))
@@ -35,6 +36,7 @@ const compression = async (filename, dry) => {
     if (!ext) {
       throw new Error(`Cannot determine file type for ${filename}—no extension found`)
     }
+
     const outputFormat = ext === 'jpg' ? 'jpeg' : ext // sharp uses “jpeg” instead of “jpg”
 
     if (outputFormat === 'png') {
@@ -50,8 +52,9 @@ const compression = async (filename, dry) => {
         .avif({ lossless: true })
         .toFile(tempFilePath)
     } else if (outputFormat === 'gif') {
+      const execFileAsync = util.promisify(execFile)
       try {
-        execFileSync(gifsicle, ['-O3', filename, '-o', tempFilePath], { stdio: ['ignore', 'ignore', 'ignore'] })
+        await execFileAsync(gifsicle, ['-O3', filename, '-o', tempFilePath], { stdio: ['ignore', 'ignore', 'ignore'] })
       } catch (err) {
         logMessage(`Skipped ${filename} (appears corrupt)`, dry)
         return 0
