@@ -9,16 +9,17 @@ import path from 'path'
 import sharp from 'sharp'
 
 const logMessage = (message, dry, color = 'yellow') => {
-  if (dry) {
-    console.info(chalk[color](`Dry run: ${message}`))
-  } else {
-    console.info(chalk[color](message))
-  }
+  console.info(chalk[color](`${dry ? 'Dry run: ' : ''}${message}`))
 }
 
 const compression = async (filename, dry) => {
   const filenameBackup = `${filename}.bak`
-  fs.copyFileSync(filename, filenameBackup)
+  try {
+    fs.copyFileSync(filename, filenameBackup)
+  } catch (error) {
+    console.error(`Error creating backup for ${filename}:`, error)
+    return 0
+  }
 
   const fileSizeBefore = await size(filename)
 
@@ -71,9 +72,7 @@ const compression = async (filename, dry) => {
       color = 'green'
       status = 'Compressed'
       details = `${sizeReadable(fileSizeBefore)} → ${sizeReadable(fileSizeAfter)}`
-    }
-
-    if (fileSizeAfter > fileSizeBefore) {
+    } else if (fileSizeAfter > fileSizeBefore) {
       color = 'blue'
       status = 'Skipped'
       details = 'already better compressed'
@@ -90,12 +89,12 @@ const compression = async (filename, dry) => {
     fs.unlinkSync(tempFilePath)
 
     if (fileSizeAfter === 0) {
-      console.error(chalk.bold.red(`Something went wrong, new file size is ${sizeReadable(fileSizeAfter)}`))
+      console.error(chalk.bold.red(`Error doing something meaningful here, new file size is ${sizeReadable(fileSizeAfter)}`))
     }
 
     return fileSizeAfter < fileSizeBefore ? fileSizeBefore - fileSizeAfter : 0
-  } catch (err) {
-    console.error(`Error compressing ${filename}:`, err)
+  } catch (error) {
+    console.error(`Error compressing ${filename}:`, error)
     fs.renameSync(filenameBackup, filename)
     return 0
   } finally {

@@ -68,8 +68,8 @@ import { hideBin } from 'yargs/helpers'
       const status = await git.status()
       compressionFiles = status.staged.filter(filename => files.includes(filename))
       await compress(compressionFiles, argv.dry)
-    } catch (err) {
-      console.error(err)
+    } catch (error) {
+      console.error(error)
     }
   } else {
     await compress(compressionFiles, argv.dry)
