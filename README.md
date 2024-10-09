@@ -2,15 +2,27 @@
 
 (This project was based on [sum.cumo’s imagemin-merlin](https://github.com/sumcumo/imagemin-merlin). [Changes are documented](https://github.com/sumcumo/imagemin-merlin/compare/master...j9t:master), and include this README. Imagemin Guard supports two additional file formats—WebP and AVIF—, comes with improved code and documentation, and is being maintained. For this reason, it’s not based on any Imagemin packages anymore.)
 
-Imagemin Guard takes care of near-lossless compression of your images, to help you avoid bloat in your repositories. It makes it convenient and as safe as possible to automatically compress JPG, PNG, GIF, WebP, and AVIF images.
+Imagemin Guard takes care of near-lossless compression of your images, to help you avoid bloat in your repositories. It makes it convenient and as safe as possible to automatically compress PNG, JPG, GIF, WebP, and AVIF images.
 
 It’s convenient because setup is simple. Install, run, add hook, done.
 
-It’s as safe as possible because compression happens losslessly (to be precise, near-lossless for PNG and GIF images). That allows you to stop worrying about forgetting to compress images, but also about sacrificing too much quality. (You can take care of additional optimizations by yourself or through other tooling.)
+It’s as safe as possible because compression happens losslessly (to be precise, near-lossless for JPG and GIF images). That allows you to stop worrying about forgetting to compress images, but also about sacrificing too much quality. (You can take care of additional optimizations by yourself or through other tooling.)
 
 ## Installation and Use
 
-### 1) Install
+(Note available parameters below.)
+
+### Ways to Use Imagemin Guard
+
+#### Option 1: Immediate Manual Use
+
+You can use Imagemin Guard right away, without installation, by running
+
+```console
+npx @j9t/imagemin-guard
+```
+
+#### Option 2: Project-Linked Manual Use
 
 Install Imagemin Guard in your project:
 
@@ -18,9 +30,7 @@ Install Imagemin Guard in your project:
 npm i -D @j9t/imagemin-guard
 ```
 
-### 2a) Perform Manual Compression
-
-You can run Imagemin Guard by calling
+Run Imagemin Guard by calling
 
 ```console
 npx imagemin-guard
@@ -28,9 +38,19 @@ npx imagemin-guard
 
 To make sure that _all_ images are being compressed, it’s recommended to run Imagemin Guard like this at least once, after installation.
 
-(In repositories with large images, you may run into `MaxBufferError`s on `stdout`. You can work around this by using the `--ignore` parameter, as described below, and ignoring the respective file(s); or you could do this step with another tool, if at all, and use Imagemin Guard for automated compression as follows.)
+#### Option 3: Automated Use
 
-### 2b) Set Up Automatic Compression
+Install Imagemin Guard in your project:
+
+```console
+npm i -D @j9t/imagemin-guard
+```
+
+To compress images already in the code base, run Imagemin Guard once by calling
+
+```console
+npx imagemin-guard
+```
 
 For automated use, Imagemin Guard should be triggered through a [Git hook](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks) or a related tool like [Husky](https://github.com/typicode/husky) (`npm i -D husky`), for example on `pre-commit`.
 
@@ -64,7 +84,7 @@ Be aware that the way this automation works, compressed images will show as chan
 
 * `--ignore` allows you to specify paths to be ignored (as in `--ignore=example,test`). Multiple paths must be separated by commas. (Files and paths specified in .gitignore files are generally ignored.)
 
-* `--staged` (recommended with automated use) triggers a mode that watches JPG, PNG, GIF, WebP, and AVIF files in `git diff` and only compresses those files—that approach makes Imagemin Guard more efficient in operation.
+* `--staged` (recommended with automated use) triggers a mode that watches PNG, JPG, GIF, WebP, and AVIF files in `git diff` and only compresses those files—that approach makes Imagemin Guard more efficient in operation.
 
 ## What Does the Output Look Like?
 
@@ -80,23 +100,21 @@ Roughly like this:
 
 Imagemin Guard is a Node script currently using [sharp](https://www.npmjs.com/package/sharp) and [gifsicle](https://www.npmjs.com/package/gifsicle) under the hood.
 
-Automated compression works by monitoring whether a given [change list](https://webglossary.info/terms/change-list/) includes any JPGs, PNGs, GIFs, WebPs, or AVIFs. It’s initiated by a Git hook. Only those images are compressed where there is an improvement. The compressed images can then be committed to the underlying repository.
+Automated compression works by monitoring whether a given [change list](https://webglossary.info/terms/change-list/) includes any PNGs, JPGs, GIFs, WebPs, or AVIFs. It’s initiated by a Git hook. Only those images are compressed where there is an improvement. The compressed images can then be committed to the underlying repository.
 
 Through this approach, though still glossed over here, Imagemin Guard makes up for what’s missing or complicated in other packages, namely easy, near-riskless, automatable, resource-friendly in-repo optimization.
 
 ## Why Use Imagemin Guard?
 
-(This is a paraphrased remainder of earlier documentation, left in case it makes anything more clear ☺️)
+You _can_ use Imagemin Guard if you need a simple, automatable, robust solution to compress images in a way that limits unnecessary image payload right from the start, in your repositories, and that reduces the risk that entirely uncompressed images go into production.
 
-You _can_ use Imagemin Guard if you need a simple, automatable, robust solution to compress images and to keep the compressed results in your repository (instead of only in the production environment).
-
-That last piece is important, as Imagemin Guard compresses near-losslessly, so there’s little risk that images suffer from quality issues after processing. With this kind of defensive base compression, there’s no reason, and only advantages, to feed back compressed graphics into the respective source repository.
+As Imagemin Guard compresses near-losslessly, there’s little risk of quality issues from compression. (Lossless compression is not possible for every image format, however, so there’s a risk when excessively iterating over the same images. Doing so may eventually degrade quality.)
 
 ## What Does Imagemin Guard _Not_ Do?
 
 Imagemin Guard is no substitute for image fine-tuning and micro-optimization. That’s difficult to do in an automated fashion, because this type of compression requires [balancing quality and performance](https://meiert.com/en/blog/understanding-image-compression/) and is context-dependent. In its most extreme form, when maximum quality at maximum performance is required from each graphic, micro-optimization is even challenging to do manually.
 
-The point is: Micro-optimization still needs to be taken care of through other means, whether manually or through tools (well including other packages from the [Imagemin family](https://github.com/imagemin)). Imagemin Guard just solves the problem that images are checked in or go live that are not compressed _at all_.
+That is, micro-optimization still needs to be taken care of through other means, whether manually or through tools. Imagemin Guard just solves the problem that images are checked in or go live that are not compressed _at all_.
 
 ## What’s Next?
 
