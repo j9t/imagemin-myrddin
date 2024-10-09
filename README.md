@@ -66,12 +66,12 @@ npm pkg set scripts.postprepare="grep -qxF 'npx imagemin-guard --staged' .husky/
 
 ## What Does the Output Look Like?
 
-Roughly like this (the screenshot is still based on an early version of Merlin):
+Roughly like this:
 
-![Screenshot of Imagemin Guard’s predecessor, Merlin, in operation.](https://raw.githubusercontent.com/j9t/imagemin-guard/master/media/output.png)
+![Screenshot of Imagemin Guard in operation.](https://raw.githubusercontent.com/j9t/imagemin-guard/master/media/output.png)
 
 * Green: The image file has been compressed.
-* White: The image file has not been changed.
+* White (light gray): The image file has not been changed.
 * Blue: The image file had been compressed more than the new result, and was therefore skipped, too.
 
 ## How Does Imagemin Guard Work?
