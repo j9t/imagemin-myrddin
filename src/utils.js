@@ -29,7 +29,7 @@ const compression = async (filename, dry) => {
     return 0
   }
 
-  const maxFileSize = 100 * 1024 * 1024; // 100 MB
+  const maxFileSize = 100 * 1024 * 1024 // 100 MB
 
   if (fileSizeBefore > maxFileSize) {
     logMessage(`Skipped ${filename} (file too large: ${sizeReadable(fileSizeBefore)})`, dry)
@@ -46,6 +46,7 @@ const compression = async (filename, dry) => {
 
     const outputFormat = ext === 'jpg' ? 'jpeg' : ext // sharp uses “jpeg” instead of “jpg”
 
+    // @@ Refactor for better maintainability and configurability
     if (outputFormat === 'png') {
       await sharp(filename)
         .png({ compressionLevel: 9, quality: 100 })
@@ -105,11 +106,15 @@ const compression = async (filename, dry) => {
     }
 
     return fileSizeAfter < fileSizeBefore ? fileSizeBefore - fileSizeAfter : 0
+
   } catch (error) {
+
     console.error(chalk.red(`Error compressing ${filename}:`), error)
     await fs.promises.rename(filenameBackup, filename)
     return 0
+
   } finally {
+
     try {
       await fs.promises.unlink(filenameBackup)
     } catch (error) {
