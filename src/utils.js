@@ -29,6 +29,13 @@ const compression = async (filename, dry) => {
     return 0
   }
 
+  const maxFileSize = 100 * 1024 * 1024; // 100 MB
+
+  if (fileSizeBefore > maxFileSize) {
+    logMessage(`Skipped ${filename} (file too large: ${sizeReadable(fileSizeBefore)})`, dry)
+    return 0
+  }
+
   const tempFilePath = path.join(os.tmpdir(), path.basename(filename))
 
   try {
@@ -75,6 +82,9 @@ const compression = async (filename, dry) => {
       color = 'green'
       status = 'Compressed'
       details = `${sizeReadable(fileSizeBefore)} → ${sizeReadable(fileSizeAfter)}`
+      if (!dry) {
+        await fs.promises.copyFile(tempFilePath, filename)
+      }
     } else if (fileSizeAfter > fileSizeBefore) {
       color = 'blue'
       status = 'Skipped'
@@ -88,7 +98,6 @@ const compression = async (filename, dry) => {
       return 0
     }
 
-    await fs.promises.copyFile(tempFilePath, filename)
     await fs.promises.unlink(tempFilePath)
 
     if (fileSizeAfter === 0) {
