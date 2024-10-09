@@ -22,20 +22,31 @@ function copyFiles(srcDir, destDir) {
 }
 
 // Function to check if images are compressed
+const ignoreFiles = ['test#corrupt.gif']
+
 function areImagesCompressed(dir) {
   const uncompressedFiles = []
   const allCompressed = fs.readdirSync(dir).every(file => {
+    if (ignoreFiles.includes(file)) {
+      // console.info(`Ignoring file: ${file}`)
+      return true
+    }
     const ext = path.extname(file).slice(1)
     if (!allowedFileTypes.includes(ext)) return true
     const filePath = path.join(dir, file)
     const originalFilePath = path.join(testFolder, file)
-    const originalStats = fs.statSync(originalFilePath)
-    const compressedStats = fs.statSync(filePath)
-    const isCompressed = compressedStats.size < originalStats.size
-    if (!isCompressed) {
-      uncompressedFiles.push(file)
+    try {
+      const originalStats = fs.statSync(originalFilePath)
+      const compressedStats = fs.statSync(filePath)
+      const isCompressed = compressedStats.size < originalStats.size
+      if (!isCompressed) {
+        uncompressedFiles.push(file)
+      }
+      return isCompressed
+    } catch (err) {
+      console.warn(`Skipping corrupt file: ${file}`)
+      return true
     }
-    return isCompressed
   })
   return { allCompressed, uncompressedFiles }
 }

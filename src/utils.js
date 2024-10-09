@@ -41,7 +41,12 @@ const compression = async (filename, dry) => {
         .avif({ lossless: true })
         .toFile(tempFilePath)
     } else if (outputFormat === 'gif') {
-      execFileSync(gifsicle, ['-O3', filename, '-o', tempFilePath])
+      try {
+        execFileSync(gifsicle, ['-O3', filename, '-o', tempFilePath], { stdio: ['ignore', 'ignore', 'ignore'] })
+      } catch (err) {
+        console.info(chalk.yellow(`Skipped ${filename} (appears corrupt)`))
+        return 0
+      }
     } else {
       await sharp(filename)
         .toFormat(outputFormat, { quality: 100 })
