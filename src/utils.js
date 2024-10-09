@@ -51,14 +51,6 @@ const compression = async (filename, dry) => {
       await sharp(filename)
         .png({ compressionLevel: 9, quality: 100 })
         .toFile(tempFilePath)
-    } else if (outputFormat === 'webp') {
-      await sharp(filename)
-        .webp({ lossless: true })
-        .toFile(tempFilePath)
-    } else if (outputFormat === 'avif') {
-      await sharp(filename)
-        .avif({ lossless: true })
-        .toFile(tempFilePath)
     } else if (outputFormat === 'gif') {
       const execFileAsync = util.promisify(execFile)
       try {
@@ -67,6 +59,14 @@ const compression = async (filename, dry) => {
         logMessage(`Skipped ${filename} (appears corrupt)`, dry)
         return 0
       }
+    } else if (outputFormat === 'webp') {
+      await sharp(filename)
+        .webp({ lossless: true })
+        .toFile(tempFilePath)
+    } else if (outputFormat === 'avif') {
+      await sharp(filename)
+        .avif({ lossless: true })
+        .toFile(tempFilePath)
     } else {
       await sharp(filename)
         .toFormat(outputFormat, { quality: 100 })
