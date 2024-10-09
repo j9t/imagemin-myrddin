@@ -1,6 +1,6 @@
 # Imagemin Guard
 
-(This project was based on [sum.cumo’s imagemin-merlin](https://github.com/sumcumo/imagemin-merlin). [Changes are documented](https://github.com/sumcumo/imagemin-merlin/compare/master...j9t:master), and include this README. Imagemin Guard supports two additional file formats—WebP and AVIF—, comes with improved code and documentation, and is being maintained. For this reason, it’s not based on any imagemin packages anymore.)
+(This project was based on [sum.cumo’s imagemin-merlin](https://github.com/sumcumo/imagemin-merlin). [Changes are documented](https://github.com/sumcumo/imagemin-merlin/compare/master...j9t:master), and include this README. Imagemin Guard supports two additional file formats—WebP and AVIF—, comes with improved code and documentation, and is being maintained. For this reason, it’s not based on any Imagemin packages anymore.)
 
 Imagemin Guard takes care of near-lossless compression of your images, to help you avoid bloat in your repositories. It makes it convenient and as safe as possible to automatically compress JPG, PNG, GIF, WebP, and AVIF images.
 
@@ -96,7 +96,7 @@ That last piece is important, as Imagemin Guard compresses near-losslessly, so t
 
 Imagemin Guard is no substitute for image fine-tuning and micro-optimization. That’s difficult to do in an automated fashion, because this type of compression requires [balancing quality and performance](https://meiert.com/en/blog/understanding-image-compression/) and is context-dependent. In its most extreme form, when maximum quality at maximum performance is required from each graphic, micro-optimization is even challenging to do manually.
 
-The point is: Micro-optimization still needs to be taken care of through other means, whether manually or through tools (well including other packages from the [imagemin family](https://github.com/imagemin)). Imagemin Guard just solves the problem that images are checked in or go live that are not compressed _at all_.
+The point is: Micro-optimization still needs to be taken care of through other means, whether manually or through tools (well including other packages from the [Imagemin family](https://github.com/imagemin)). Imagemin Guard just solves the problem that images are checked in or go live that are not compressed _at all_.
 
 ## What’s Next?
 
