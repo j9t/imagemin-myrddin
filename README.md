@@ -56,6 +56,8 @@ npm pkg set scripts.postprepare="grep -qxF 'npx imagemin-guard --staged' .husky/
 
 (For a quick explanation, what this does is install Husky as a development dependency, initialize Husky, add a pre-commit hook that triggers Imagemin Guard, commit the hook, and link the hook to a `postprepare` script so that it’s added to the repository whenever someone installs the package. As this is a new adjusted method to automatically run Imagemin Guard, please [report issues or make suggestions](https://github.com/j9t/imagemin-guard/issues/new).)
 
+Be aware that the way this automation works, compressed images will show as changed images. That is, if you check in images that aren’t compressed well enough, you might do one commit to check those images into version control, to then find some or all images changed again, requiring another commit. As many editors show diffs also for images, this is currently the intended behavior.
+
 ### Parameters
 
 * `--dry` allows you to run Imagemin Guard in “dry mode.” All changes are shown in the terminal.
