@@ -1,6 +1,7 @@
 // This file, which had been forked from imagemin-merlin, was modified for imagemin-guard: https://github.com/sumcumo/imagemin-merlin/compare/master...j9t:master
 
 import { utils } from './utils.js'
+import chalk from 'chalk';
 import { globbySync } from 'globby'
 import { rimraf } from 'rimraf'
 import simpleGit from 'simple-git'
@@ -14,9 +15,9 @@ import { hideBin } from 'yargs/helpers'
   // Share status
   const summary = (run) => {
     if (run) {
-      console.info(`\nDefensive base compression completed. You saved ${utils.sizeReadable(savedKB)}.`)
+      console.info(chalk.bold(`\nDefensive base compression completed. You saved ${utils.sizeReadable(savedKB)}.`))
     } else {
-      console.info('There were no images to compress.')
+      console.info(chalk.bold('There were no images to compress.'))
     }
   }
 

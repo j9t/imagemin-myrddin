@@ -15,9 +15,9 @@ const logMessage = (message, dry, color = 'yellow') => {
 const compression = async (filename, dry) => {
   const filenameBackup = `${filename}.bak`
   try {
-    fs.copyFileSync(filename, filenameBackup)
+    await fs.promises.copyFile(filename, filenameBackup)
   } catch (error) {
-    console.error(`Error creating backup for ${filename}:`, error)
+    console.error(chalk.red(`Error creating backup for ${filename}:`), error)
     return 0
   }
 
@@ -33,7 +33,7 @@ const compression = async (filename, dry) => {
   try {
     const ext = path.extname(filename).slice(1).toLowerCase()
     if (!ext) {
-      throw new Error(`Cannot determine file type for ${filename}; no extension found.`)
+      throw new Error(`Cannot determine file type for ${filename}—no extension found`)
     }
     const outputFormat = ext === 'jpg' ? 'jpeg' : ext // sharp uses “jpeg” instead of “jpg”
 
@@ -85,23 +85,25 @@ const compression = async (filename, dry) => {
       return 0
     }
 
-    fs.copyFileSync(tempFilePath, filename)
-    fs.unlinkSync(tempFilePath)
+    await fs.promises.copyFile(tempFilePath, filename)
+    await fs.promises.unlink(tempFilePath)
 
     if (fileSizeAfter === 0) {
-      console.error(chalk.bold.red(`Error doing something meaningful here, new file size is ${sizeReadable(fileSizeAfter)}`))
+      console.error(chalk.red(`Error doing something meaningful here—compressed file size is 0 for ${filename}`))
     }
 
     return fileSizeAfter < fileSizeBefore ? fileSizeBefore - fileSizeAfter : 0
   } catch (error) {
-    console.error(`Error compressing ${filename}:`, error)
-    fs.renameSync(filenameBackup, filename)
+    console.error(chalk.red(`Error compressing ${filename}:`), error)
+    await fs.promises.rename(filenameBackup, filename)
     return 0
   } finally {
     try {
-      fs.unlinkSync(filenameBackup)
+      await fs.promises.unlink(filenameBackup)
     } catch (error) {
-      // If the file doesn’t exist, no action is needed
+      if (error.code !== 'ENOENT') {
+        console.warn(chalk.yellow(`Failed to delete backup file ${filenameBackup}:`), error)
+      }
     }
   }
 }
