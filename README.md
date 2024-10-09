@@ -45,11 +45,11 @@ git commit -m "feat: add Husky pre-commit hook for Imagemin Guard"
 
 ### Parameters
 
-`--dry` allows you to run Imagemin Guard in “dry mode.” All changes are shown in the terminal.
+* `--dry` allows you to run Imagemin Guard in “dry mode.” All changes are shown in the terminal.
 
-`--ignore` allows you to specify paths to be ignored (as in `--ignore=example,test`). Multiple paths must be separated by commas. (Files and paths specified in .gitignore files are generally ignored.)
+* `--ignore` allows you to specify paths to be ignored (as in `--ignore=example,test`). Multiple paths must be separated by commas. (Files and paths specified in .gitignore files are generally ignored.)
 
-`--staged` (recommended with automated use) triggers a mode that watches JPG, PNG, GIF, WebP, and AVIF files in `git diff` and only compresses those files—that approach makes Imagemin Guard more efficient in operation.
+* `--staged` (recommended with automated use) triggers a mode that watches JPG, PNG, GIF, WebP, and AVIF files in `git diff` and only compresses those files—that approach makes Imagemin Guard more efficient in operation.
 
 ## What Does the Output Look Like?
 
