@@ -79,7 +79,7 @@ That last piece is important, as Imagemin Guard compresses near-losslessly, so t
 
 ## What Does Imagemin Guard _Not_ Do?
 
-Imagemin Guard is no substitute for image fine-tuning and micro-optimization. That’s difficult to do in an automated fashion, because this type of compression requires [balancing quality and performance](https://meiert.com/en/blog/understanding-image-compression/) and is context-dependent. In its most extreme form, when maximum quality at maximum performance is required from each graphic, micro-optimization is even hard to do manually.
+Imagemin Guard is no substitute for image fine-tuning and micro-optimization. That’s difficult to do in an automated fashion, because this type of compression requires [balancing quality and performance](https://meiert.com/en/blog/understanding-image-compression/) and is context-dependent. In its most extreme form, when maximum quality at maximum performance is required from each graphic, micro-optimization is even challenging to do manually.
 
 The point is: Micro-optimization still needs to be taken care of through other means, whether manually or through tools (well including other packages from the [imagemin family](https://github.com/imagemin)). Imagemin Guard just solves the problem that images are checked in or go live that are not compressed _at all_.
 
