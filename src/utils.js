@@ -8,6 +8,14 @@ import os from 'os'
 import path from 'path'
 import sharp from 'sharp'
 
+const logMessage = (message, dry, color = 'yellow') => {
+  if (dry) {
+    console.info(chalk.gray(`Dry run: ${message}`))
+  } else {
+    console.info(chalk[color](message))
+  }
+}
+
 const compression = async (filename, dry) => {
   const filenameBackup = `${filename}.bak`
   fs.copyFileSync(filename, filenameBackup)
@@ -15,7 +23,7 @@ const compression = async (filename, dry) => {
   const fileSizeBefore = await size(filename)
 
   if (fileSizeBefore === 0) {
-    console.info(chalk.yellow(`Skipped ${filename} (${sizeReadable(fileSizeBefore)})`))
+    logMessage(`Skipped ${filename} (${sizeReadable(fileSizeBefore)})`, dry)
     return 0
   }
 
@@ -44,7 +52,7 @@ const compression = async (filename, dry) => {
       try {
         execFileSync(gifsicle, ['-O3', filename, '-o', tempFilePath], { stdio: ['ignore', 'ignore', 'ignore'] })
       } catch (err) {
-        console.info(chalk.yellow(`Skipped ${filename} (appears corrupt)`))
+        logMessage(`Skipped ${filename} (appears corrupt)`, dry)
         return 0
       }
     } else {
@@ -71,18 +79,15 @@ const compression = async (filename, dry) => {
       details = 'already better compressed'
     }
 
+    logMessage(`${status} ${filename} (${details})`, dry, color)
+
     if (dry) {
-      console.info(chalk.gray(`Dry run: ${status} ${filename} (${details})`))
       fs.unlinkSync(tempFilePath)
       return 0
     }
 
     fs.copyFileSync(tempFilePath, filename)
     fs.unlinkSync(tempFilePath)
-
-    console.info(
-      chalk[color](`${status} ${filename} (${details})`)
-    )
 
     if (fileSizeAfter === 0) {
       console.error(chalk.bold.red(`Something went wrong, new file size is ${sizeReadable(fileSizeAfter)}`))
