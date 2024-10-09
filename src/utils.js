@@ -102,7 +102,7 @@ const compression = async (filename, dry) => {
     await fs.promises.unlink(tempFilePath)
 
     if (fileSizeAfter === 0) {
-      console.error(chalk.red(`Error doing something meaningful here—compressed file size is 0 for ${filename}`))
+      console.error(chalk.red(`Error compressing ${filename}: Compressed file size is 0`))
     }
 
     return fileSizeAfter < fileSizeBefore ? fileSizeBefore - fileSizeAfter : 0
