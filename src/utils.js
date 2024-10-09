@@ -15,7 +15,7 @@ const compression = async (filename, dry) => {
   const fileSizeBefore = await size(filename)
 
   if (fileSizeBefore === 0) {
-    console.info(chalk.blue(`Skipping ${filename}, it has ${sizeReadable(fileSizeBefore)}`))
+    console.info(chalk.yellow(`Skipped ${filename} (${sizeReadable(fileSizeBefore)})`))
     return 0
   }
 
@@ -63,7 +63,9 @@ const compression = async (filename, dry) => {
       color = 'green'
       status = 'Compressed'
       details = `${sizeReadable(fileSizeBefore)} → ${sizeReadable(fileSizeAfter)}`
-    } else if (fileSizeAfter > fileSizeBefore) {
+    }
+
+    if (fileSizeAfter > fileSizeBefore) {
       color = 'blue'
       status = 'Skipped'
       details = 'already better compressed'
