@@ -6,7 +6,7 @@ const testFolder = path.join(__dirname, '../media/test')
 const testFolderGit = path.join(__dirname, '../media/test-git')
 const imageminGuardScript = path.join(__dirname, '../bin/imagemin-guard.js')
 // Crutch to avoid files like .DS_Store to sneak in
-// @@ Consolidate with package, to keep image definitions DRY
+// @@ Consolidate with package, to keep image definitions DRY (once there’s better Jest ESM support?)
 const allowedFileTypes = ['avif', 'gif', 'jpg', 'jpeg', 'png', 'webp']
 
 // Function to copy files
@@ -22,20 +22,31 @@ function copyFiles(srcDir, destDir) {
 }
 
 // Function to check if images are compressed
+const ignoreFiles = ['test#corrupt.gif']
+
 function areImagesCompressed(dir) {
   const uncompressedFiles = []
   const allCompressed = fs.readdirSync(dir).every(file => {
+    if (ignoreFiles.includes(file)) {
+      // console.info(`Ignoring file: ${file}`)
+      return true
+    }
     const ext = path.extname(file).slice(1)
     if (!allowedFileTypes.includes(ext)) return true
     const filePath = path.join(dir, file)
     const originalFilePath = path.join(testFolder, file)
-    const originalStats = fs.statSync(originalFilePath)
-    const compressedStats = fs.statSync(filePath)
-    const isCompressed = compressedStats.size < originalStats.size
-    if (!isCompressed) {
-      uncompressedFiles.push(file)
+    try {
+      const originalStats = fs.statSync(originalFilePath)
+      const compressedStats = fs.statSync(filePath)
+      const isCompressed = compressedStats.size < originalStats.size
+      if (!isCompressed) {
+        uncompressedFiles.push(file)
+      }
+      return isCompressed
+    } catch (err) {
+      console.warn(`Skipping corrupt file: ${file}`)
+      return true
     }
-    return isCompressed
   })
   return { allCompressed, uncompressedFiles }
 }
@@ -55,7 +66,7 @@ function areImagesAlreadyCompressed(dir) {
 
 describe('Imagemin Guard', () => {
   beforeAll(() => {
-    // Backup original images
+    // Back up original images
     copyFiles(testFolder, testFolderGit)
   })
 
@@ -74,7 +85,6 @@ describe('Imagemin Guard', () => {
     // Verify images are compressed
     const { allCompressed, uncompressedFiles } = areImagesCompressed(testFolderGit)
     if (uncompressedFiles.length > 0) {
-      // @@ Ensure all compressed files are listed
       console.log('The following files were not compressed:', uncompressedFiles.join(', '))
     }
     expect(allCompressed).toBe(true)
@@ -105,5 +115,23 @@ describe('Imagemin Guard', () => {
       console.log('The following files were not compressed:', uncompressedFiles.join(', '))
     }
     expect(allCompressed).toBe(true)
+  })
+
+  test('Do not modify files in dry run', () => {
+    const originalStats = fs.readdirSync(testFolderGit).map(file => {
+      const filePath = path.join(testFolderGit, file)
+      return { file, stats: fs.statSync(filePath) }
+    })
+    execSync(`node ${imageminGuardScript} --dry`)
+    const newStats = fs.readdirSync(testFolderGit).map(file => {
+      const filePath = path.join(testFolderGit, file)
+      return { file, stats: fs.statSync(filePath) }
+    })
+    originalStats.forEach((original, index) => {
+      const newFile = newStats[index]
+      expect(newFile.file).toStrictEqual(original.file)
+      expect(newFile.stats.size).toStrictEqual(original.stats.size)
+      expect(newFile.stats.mtime).toStrictEqual(original.stats.mtime)
+    })
   })
 })

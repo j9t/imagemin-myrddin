@@ -1,91 +1,135 @@
 // This file, which had been forked from imagemin-merlin, was modified for imagemin-guard: https://github.com/sumcumo/imagemin-merlin/compare/master...j9t:master
 
-import { filesize, partial } from 'filesize'
-import fs from 'fs'
-import path from 'path'
-import imagemin from 'imagemin'
-import imageminMozjpeg from 'imagemin-mozjpeg'
-import imageminOptipng from 'imagemin-optipng'
-import imageminGifsicle from 'imagemin-gifsicle'
-import imageminWebp from 'imagemin-webp'
-import imageminAvif from 'imagemin-avif'
 import chalk from 'chalk'
-import { options } from './plugins.js'
+import { execFile } from 'child_process'
+import fs from 'fs'
+import gifsicle from 'gifsicle'
+import os from 'os'
+import path from 'path'
+import sharp from 'sharp'
+import util from 'util'
+
+const logMessage = (message, dry, color = 'yellow') => {
+  console.info(chalk[color](`${dry ? 'Dry run: ' : ''}${message}`))
+}
 
 const compression = async (filename, dry) => {
   const filenameBackup = `${filename}.bak`
-  fs.copyFileSync(filename, filenameBackup)
+  try {
+    await fs.promises.copyFile(filename, filenameBackup)
+  } catch (error) {
+    console.error(chalk.red(`Error creating backup for ${filename}:`), error)
+    return 0
+  }
 
-  const fileSizeBefore = size(filename)
+  const fileSizeBefore = await size(filename)
 
   if (fileSizeBefore === 0) {
-    console.info(chalk.blue(`Skipping ${filename}, it has ${filesize(fileSizeBefore)}`))
-    return
+    logMessage(`Skipped ${filename} (${sizeReadable(fileSizeBefore)})`, dry)
+    return 0
   }
 
-  let output = path.parse(filename).dir || './'
-  if (dry) {
-    output = `/tmp/imagemin-guard/${path.parse(filename).base}`
+  const maxFileSize = 100 * 1024 * 1024 // 100 MB
+
+  if (fileSizeBefore > maxFileSize) {
+    logMessage(`Skipped ${filename} (file too large: ${sizeReadable(fileSizeBefore)})`, dry)
+    return 0
   }
 
-  let option
-  if (filename.endsWith('avif')) {
-    option = imageminAvif(options.avif)
-  } else if (filename.endsWith('gif')) {
-    option = imageminGifsicle(options.gifsicle)
-  } else if (filename.endsWith('jpg') || filename.endsWith('jpeg')) {
-    option = imageminMozjpeg(options.mozjpeg)
-  } else if (filename.endsWith('png')) {
-    option = imageminOptipng(options.optipng)
-  } else if (filename.endsWith('webp')) {
-    option = imageminWebp(options.webp)
-  } else {
-    /* Hacky way of averting disaster */
-    option = imageminGifsicle()
+  const tempFilePath = path.join(os.tmpdir(), path.basename(filename))
+
+  try {
+    const ext = path.extname(filename).slice(1).toLowerCase()
+    if (!ext) {
+      throw new Error(`Cannot determine file type for ${filename}—no extension found`)
+    }
+
+    const outputFormat = ext === 'jpg' ? 'jpeg' : ext // sharp uses “jpeg” instead of “jpg”
+
+    // @@ Refactor for better maintainability and configurability
+    if (outputFormat === 'png') {
+      await sharp(filename)
+        .png({ compressionLevel: 9, quality: 100 })
+        .toFile(tempFilePath)
+    } else if (outputFormat === 'webp') {
+      await sharp(filename)
+        .webp({ lossless: true })
+        .toFile(tempFilePath)
+    } else if (outputFormat === 'avif') {
+      await sharp(filename)
+        .avif({ lossless: true })
+        .toFile(tempFilePath)
+    } else if (outputFormat === 'gif') {
+      const execFileAsync = util.promisify(execFile)
+      try {
+        await execFileAsync(gifsicle, ['-O3', filename, '-o', tempFilePath], { stdio: ['ignore', 'ignore', 'ignore'] })
+      } catch (err) {
+        logMessage(`Skipped ${filename} (appears corrupt)`, dry)
+        return 0
+      }
+    } else {
+      await sharp(filename)
+        .toFormat(outputFormat, { quality: 100 })
+        .toFile(tempFilePath)
+    }
+
+    const fileSizeAfter = await size(tempFilePath)
+
+    let color = 'white'
+    let status = 'Skipped'
+    let details = 'already compressed'
+
+    if (fileSizeAfter < fileSizeBefore) {
+      color = 'green'
+      status = 'Compressed'
+      details = `${sizeReadable(fileSizeBefore)} → ${sizeReadable(fileSizeAfter)}`
+      if (!dry) {
+        await fs.promises.copyFile(tempFilePath, filename)
+      }
+    } else if (fileSizeAfter > fileSizeBefore) {
+      color = 'blue'
+      status = 'Skipped'
+      details = 'already better compressed'
+    }
+
+    logMessage(`${status} ${filename} (${details})`, dry, color)
+
+    if (dry) {
+      fs.unlinkSync(tempFilePath)
+      return 0
+    }
+
+    await fs.promises.unlink(tempFilePath)
+
+    if (fileSizeAfter === 0) {
+      console.error(chalk.red(`Error compressing ${filename}: Compressed file size is 0`))
+    }
+
+    return fileSizeAfter < fileSizeBefore ? fileSizeBefore - fileSizeAfter : 0
+
+  } catch (error) {
+
+    console.error(chalk.red(`Error compressing ${filename}:`), error)
+    await fs.promises.rename(filenameBackup, filename)
+    return 0
+
+  } finally {
+
+    try {
+      await fs.promises.unlink(filenameBackup)
+    } catch (error) {
+      if (error.code !== 'ENOENT') {
+        console.warn(chalk.yellow(`Failed to delete backup file ${filenameBackup}:`), error)
+      }
+    }
   }
-
-  await imagemin([filename], {
-    destination: output,
-    plugins: [option],
-  })
-  const fileSizeAfter = size(`${output}/${path.parse(filename).base}`)
-
-  let color = 'white'
-  let status = 'Skipped'
-  let details = 'already compressed'
-
-  if (fileSizeAfter < fileSizeBefore) {
-    color = 'green'
-    status = 'Compressed'
-    details = `${sizeReadable(fileSizeBefore)} → ${sizeReadable(fileSizeAfter)}`
-  } else if (fileSizeAfter > fileSizeBefore) {
-    color = 'blue'
-    status = 'Skipped'
-    details = 'even more compressed'
-
-    // Restore the backup’ed file
-    fs.renameSync(filenameBackup, filename)
-  }
-
-  if (fs.existsSync(filenameBackup)) {
-    fs.unlinkSync(filenameBackup)
-  }
-
-  console.info(
-    chalk[color](`${status} ${filename} (${details})`)
-  )
-
-  if (fileSizeAfter === 0) {
-    console.error(chalk.bold.red(`Something went wrong, new file size is ${filesize(fileSizeAfter)}`))
-  }
-
-  return fileSizeAfter < fileSizeBefore ? fileSizeBefore - fileSizeAfter : 0
 }
 
-const size = (file) => {
-  return fs.statSync(file)['size']
+const size = async (file) => {
+  const stats = await fs.promises.stat(file)
+  return stats.size
 }
 
-const sizeReadable = partial(size, { round: 5 })
+const sizeReadable = (size) => `${(size / 1024).toFixed(2)} KB`
 
 export const utils = { compression, sizeReadable }
