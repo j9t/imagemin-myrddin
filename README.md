@@ -34,14 +34,27 @@ To make sure that _all_ images are being compressed, it’s recommended to run I
 
 For automated use, Imagemin Guard should be triggered through a [Git hook](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks) or a related tool like [Husky](https://github.com/typicode/husky) (`npm i -D husky`), for example on `pre-commit`.
 
-For that, using Husky as an example, run the following commands in your project root (you can copy and execute them at once):
+If you already use Husky, run the following commands in your project root (you can copy and execute them at once):
 
 ```console
+grep -qxF "npx imagemin-guard --staged" .husky/pre-commit || echo "\nnpx imagemin-guard --staged" >> .husky/pre-commit;\
+git add .husky/pre-commit;\
+git commit -m "feat: add Husky pre-commit hook for Imagemin Guard";\
+npm pkg set scripts.postprepare="grep -qxF 'npx imagemin-guard --staged' .husky/pre-commit || echo '\nnpx imagemin-guard --staged' >> .husky/pre-commit"
+```
+
+If you don’t use Husky yet, run the following commands from your project root:
+
+```console
+npm i -D husky;\
 npx husky init;\
 echo "npx imagemin-guard --staged" > .husky/pre-commit;\
 git add .husky/pre-commit;\
-git commit -m "feat: add Husky pre-commit hook for Imagemin Guard"
+git commit -m "feat: add Husky pre-commit hook for Imagemin Guard";\
+npm pkg set scripts.postprepare="grep -qxF 'npx imagemin-guard --staged' .husky/pre-commit || echo '\nnpx imagemin-guard --staged' >> .husky/pre-commit"
 ```
+
+(For a quick explanation, what this does is install Husky as a development dependency, initialize Husky, add a pre-commit hook that triggers Imagemin Guard, commit the hook, and link the hook to a `postprepare` script so that it’s added to the repository whenever someone installs the package. As this is a new adjusted method to automatically run Imagemin Guard, please [report issues or make suggestions](https://github.com/j9t/imagemin-guard/issues/new).)
 
 ### Parameters
 
