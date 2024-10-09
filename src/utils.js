@@ -10,7 +10,7 @@ import sharp from 'sharp'
 
 const logMessage = (message, dry, color = 'yellow') => {
   if (dry) {
-    console.info(chalk.gray(`Dry run: ${message}`))
+    console.info(chalk[color](`Dry run: ${message}`))
   } else {
     console.info(chalk[color](message))
   }
