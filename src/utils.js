@@ -89,7 +89,7 @@ const compression = async (filename, dry) => {
     } else if (fileSizeAfter > fileSizeBefore) {
       color = 'blue'
       status = 'Skipped'
-      details = 'already better compressed'
+      details = 'already compressed more aggressively'
     }
 
     logMessage(`${status} ${filename} (${details})`, dry, color)
