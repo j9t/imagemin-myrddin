@@ -4,9 +4,9 @@
 
 Imagemin Guard takes care of near-lossless compression of your images, to help you avoid bloat in your repositories. It makes it convenient and as safe as possible to automatically compress PNG, JPG, GIF, WebP, and AVIF images.
 
-It’s convenient because setup is simple. Install, run, add hook, done.
+It’s convenient because setup is simple. Run it right away—done. Or install, run, add hook—done.
 
-It’s as safe as possible because compression happens losslessly (to be precise, near-lossless for JPG and GIF images). That allows you to stop worrying about forgetting to compress images, but also about sacrificing too much quality. (You can take care of additional optimizations by yourself or through other tooling.)
+It’s as safe as possible because compression happens losslessly (near-lossless for JPG and GIF images). That allows you to stop worrying about forgetting to compress images, but also about sacrificing too much quality. (You can take care of additional optimizations manually or through other tooling.)
 
 ## Installation and Use
 
@@ -94,15 +94,15 @@ Roughly like this:
 
 * Green: The image file has been compressed.
 * White (light gray): The image file has not been changed.
-* Blue: The image file had been compressed more than the new result, and was therefore skipped, too.
+* Blue: The image file had already been compressed more aggressively than the new result, and was therefore skipped, too.
 
 ## How Does Imagemin Guard Work?
 
-Imagemin Guard is a Node script currently using [sharp](https://www.npmjs.com/package/sharp) and [gifsicle](https://www.npmjs.com/package/gifsicle) under the hood.
+Imagemin Guard is a Node script that currently uses [sharp](https://www.npmjs.com/package/sharp) and [gifsicle](https://www.npmjs.com/package/gifsicle) under the hood.
 
 Automated compression works by monitoring whether a given [change list](https://webglossary.info/terms/change-list/) includes any PNGs, JPGs, GIFs, WebPs, or AVIFs. It’s initiated by a Git hook. Only those images are compressed where there is an improvement. The compressed images can then be committed to the underlying repository.
 
-Through this approach, though still glossed over here, Imagemin Guard makes up for what’s missing or complicated in other packages, namely easy, near-riskless, automatable, resource-friendly in-repo optimization.
+Through this approach, though glossed over here, Imagemin Guard makes up for what’s missing or complicated in other packages, namely easy, near-riskless, automatable, resource-friendly in-repo optimization.
 
 ## Why Use Imagemin Guard?
 
