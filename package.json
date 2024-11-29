@@ -1,35 +1,8 @@
 {
-  "name": "@j9t/imagemin-guard",
-  "description": "Ensure losslessly compressed PNG, JPG, GIF, WebP, and AVIF images (suitable for manual and automatic compression)",
   "author": "Jens Oliver Meiert",
-  "version": "4.0.5",
-  "type": "module",
-  "license": "Apache-2.0",
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/j9t/imagemin-guard.git"
-  },
-  "homepage": "https://github.com/j9t/imagemin-guard",
-  "keywords": [
-    "compression",
-    "images",
-    "graphics",
-    "performance",
-    "automation",
-    "optimization",
-    "lossless",
-    "png",
-    "jpg",
-    "gif",
-    "webp",
-    "avif"
-  ],
   "bin": {
     "imagemin-guard": "bin/imagemin-guard.js",
     "imagemin-merlin": "bin/imagemin-guard.js"
-  },
-  "scripts": {
-    "test": "jest"
   },
   "dependencies": {
     "chalk": "^5.3.0",
@@ -41,7 +14,34 @@
     "simple-git": "^3.27.0",
     "yargs": "^17.7.2"
   },
+  "description": "Ensure losslessly compressed PNG, JPG, GIF, WebP, and AVIF images (suitable for manual and automatic compression)",
   "devDependencies": {
     "jest": "^29.7.0"
-  }
+  },
+  "homepage": "https://github.com/j9t/imagemin-guard",
+  "keywords": [
+    "automation",
+    "avif",
+    "compression",
+    "gif",
+    "graphics",
+    "images",
+    "jpg",
+    "lossless",
+    "optimization",
+    "performance",
+    "png",
+    "webp"
+  ],
+  "license": "Apache-2.0",
+  "name": "@j9t/imagemin-guard",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/j9t/imagemin-guard.git"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "type": "module",
+  "version": "4.0.5"
 }
