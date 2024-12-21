@@ -3,7 +3,6 @@
 import { utils } from './utils.js'
 import chalk from 'chalk';
 import { globbySync } from 'globby'
-import { rimraf } from 'rimraf'
 import simpleGit from 'simple-git'
 import _yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'

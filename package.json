@@ -9,7 +9,6 @@
     "filesize": "^10.1.6",
     "gifsicle": "^7.0.1",
     "globby": "^14.0.2",
-    "rimraf": "^6.0.1",
     "sharp": "^0.33.5",
     "simple-git": "^3.27.0",
     "yargs": "^17.7.2"
@@ -43,5 +42,5 @@
     "test": "jest"
   },
   "type": "module",
-  "version": "4.0.5"
+  "version": "4.0.6"
 }
