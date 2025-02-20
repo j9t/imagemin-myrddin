@@ -8,7 +8,7 @@
     "chalk": "^5.4.1",
     "filesize": "^10.1.6",
     "gifsicle": "^7.0.1",
-    "globby": "^14.0.2",
+    "globby": "^14.1.0",
     "sharp": "^0.33.5",
     "simple-git": "^3.27.0",
     "yargs": "^17.7.2"
