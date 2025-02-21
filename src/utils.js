@@ -10,15 +10,8 @@ import { styleText } from 'node:util'
 import util from 'util'
 
 const logMessage = (message, dry, color = 'yellow') => {
-  const logMessageStyled = (color) => styleText(color, `${dry ? 'Dry run: ' : ''}${message}`)
-  const styles = {
-    yellow: logMessageStyled('yellow'),
-    red: logMessageStyled('red'),
-    green: logMessageStyled('green'),
-    blue: logMessageStyled('blue'),
-    white: logMessageStyled('white'),
-  }
-  console.info(styles[color])
+  const prefix = dry ? 'Dry run: ' : ''
+  console.info(styleText(color, `${prefix}${message}`))
 }
 
 const compression = async (filename, dry) => {
@@ -26,7 +19,7 @@ const compression = async (filename, dry) => {
   try {
     await fs.promises.copyFile(filename, filenameBackup)
   } catch (error) {
-    console.error(styleText('red', `Error creating backup for ${filename}:`, { stream: stderr }), error)
+    console.error(styleText('red', `Error creating backup for ${filename}:`), error)
     return 0
   }
 
@@ -110,14 +103,14 @@ const compression = async (filename, dry) => {
     await fs.promises.unlink(tempFilePath)
 
     if (fileSizeAfter === 0) {
-      console.error(styleText('red', `Error compressing ${filename}: Compressed file size is 0`, { stream: stderr }))
+      console.error(styleText('red', `Error compressing ${filename}: Compressed file size is 0`))
     }
 
     return fileSizeAfter < fileSizeBefore ? fileSizeBefore - fileSizeAfter : 0
 
   } catch (error) {
 
-    console.error(styleText('red', `Error compressing ${filename}:`, { stream: stderr }), error)
+    console.error(styleText('red', `Error compressing ${filename}:`), error)
     await fs.promises.rename(filenameBackup, filename)
     return 0
 
@@ -127,7 +120,7 @@ const compression = async (filename, dry) => {
       await fs.promises.unlink(filenameBackup)
     } catch (error) {
       if (error.code !== 'ENOENT') {
-        console.warn(styleText('yellow', `Failed to delete backup file ${filenameBackup}:`, { stream: stderr }), error)
+        console.warn(styleText('yellow', `Failed to delete backup file ${filenameBackup}:`), error)
       }
     }
   }
