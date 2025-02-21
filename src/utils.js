@@ -1,16 +1,24 @@
 // This file, which had been forked from imagemin-merlin, was modified for imagemin-guard: https://github.com/sumcumo/imagemin-merlin/compare/master...j9t:master
 
-import chalk from 'chalk'
 import { execFile } from 'child_process'
 import fs from 'fs'
 import gifsicle from 'gifsicle'
 import os from 'os'
 import path from 'path'
 import sharp from 'sharp'
+import { styleText } from 'node:util'
 import util from 'util'
 
 const logMessage = (message, dry, color = 'yellow') => {
-  console.info(chalk[color](`${dry ? 'Dry run: ' : ''}${message}`))
+  const logMessageStyled = (color) => styleText(color, `${dry ? 'Dry run: ' : ''}${message}`)
+  const styles = {
+    yellow: logMessageStyled('yellow'),
+    red: logMessageStyled('red'),
+    green: logMessageStyled('green'),
+    blue: logMessageStyled('blue'),
+    white: logMessageStyled('white'),
+  }
+  console.info(styles[color])
 }
 
 const compression = async (filename, dry) => {
@@ -18,7 +26,7 @@ const compression = async (filename, dry) => {
   try {
     await fs.promises.copyFile(filename, filenameBackup)
   } catch (error) {
-    console.error(chalk.red(`Error creating backup for ${filename}:`), error)
+    console.error(styleText('red', `Error creating backup for ${filename}:`, { stream: stderr }), error)
     return 0
   }
 
@@ -102,14 +110,14 @@ const compression = async (filename, dry) => {
     await fs.promises.unlink(tempFilePath)
 
     if (fileSizeAfter === 0) {
-      console.error(chalk.red(`Error compressing ${filename}: Compressed file size is 0`))
+      console.error(styleText('red', `Error compressing ${filename}: Compressed file size is 0`, { stream: stderr }))
     }
 
     return fileSizeAfter < fileSizeBefore ? fileSizeBefore - fileSizeAfter : 0
 
   } catch (error) {
 
-    console.error(chalk.red(`Error compressing ${filename}:`), error)
+    console.error(styleText('red', `Error compressing ${filename}:`, { stream: stderr }), error)
     await fs.promises.rename(filenameBackup, filename)
     return 0
 
@@ -119,7 +127,7 @@ const compression = async (filename, dry) => {
       await fs.promises.unlink(filenameBackup)
     } catch (error) {
       if (error.code !== 'ENOENT') {
-        console.warn(chalk.yellow(`Failed to delete backup file ${filenameBackup}:`), error)
+        console.warn(styleText('yellow', `Failed to delete backup file ${filenameBackup}:`, { stream: stderr }), error)
       }
     }
   }
