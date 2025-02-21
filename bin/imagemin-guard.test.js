@@ -70,7 +70,7 @@ describe('Imagemin Guard', () => {
     copyFiles(testFolder, testFolderGit)
   })
 
-  afterAll(async () => {
+  afterAll(() => {
     // Clean up temporary directory
     if (fs.existsSync(testFolderGit)) {
       fs.rmSync(testFolderGit, { recursive: true, force: true });
