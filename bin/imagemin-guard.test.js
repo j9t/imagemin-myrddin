@@ -73,9 +73,9 @@ describe('Imagemin Guard', () => {
   afterAll(() => {
     // Clean up temporary directory
     if (fs.existsSync(testFolderGit)) {
-      fs.rmSync(testFolderGit, { recursive: true, force: true });
+      fs.rmSync(testFolderGit, { recursive: true, force: true })
     }
-  });
+  })
 
   test('Compress images', () => {
     // Ensure images in temp folder are not already compressed
