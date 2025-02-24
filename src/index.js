@@ -1,15 +1,17 @@
 // This file, which had been forked from imagemin-merlin, was modified for imagemin-guard: https://github.com/sumcumo/imagemin-merlin/compare/master...j9t:master
 
 import { globbySync } from 'globby'
-import { hideBin } from 'yargs/helpers'
 import simpleGit from 'simple-git'
-import { styleText } from 'node:util'
+import { parseArgs, styleText } from 'node:util'
 import { utils } from './utils.js'
-import _yargs from 'yargs'
 
 (async () => {
-  const yargs = _yargs(hideBin(process.argv))
-  const argv = await yargs.argv
+  const options = {
+    dry: { type: 'boolean', default: false },
+    ignore: { type: 'string', multiple: false, default: '' },
+    staged: { type: 'boolean', default: false }
+  }
+  const { values: argv } = parseArgs({ options })
 
   // Share status
   const summary = (run) => {
